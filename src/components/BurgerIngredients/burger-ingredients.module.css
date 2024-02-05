@@ -1,7 +1,11 @@
 .container {
   width: 600px;
   height: 912px;
-  border: 2px solid #4C4CFF;
   background: #131316;
   overflow: scroll;
 }
+
+.tab {
+  display: flex;
+}
+

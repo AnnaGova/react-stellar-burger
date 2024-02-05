@@ -1,0 +1,16 @@
+.ingredients_list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 272px);
+  padding: 0;
+  white-space: normal;
+  text-align: center;
+  gap: 24px;
+}
+
+.ingredient {
+  width: 272px;
+  position: relative;
+}
+
+

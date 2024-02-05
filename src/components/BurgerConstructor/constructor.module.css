@@ -1,9 +1,43 @@
 .container {
   width: 600px;
   height: 912px;
-  border: 2px solid #4C4CFF;
   background: #131316;
+  white-space: normal;
   overflow: scroll;
+
 }
 
+.order {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+  justify-content: flex-end;
+  padding-bottom: 52px;
+}
 
+.sum {
+  display: flex;
+  align-items: center;
+}
+
+.added_items {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 16px;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.item {
+  max-height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.order_container {
+  display: 'flex';
+  flex-direction: 'column';
+  gap: '10px';
+  height: '563px';
+}
