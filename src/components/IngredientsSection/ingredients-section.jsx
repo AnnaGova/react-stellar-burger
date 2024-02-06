@@ -1,4 +1,4 @@
-import { IngredietDetails } from "../IngredientDetails /ingredient-details";
+import { IngredietDetails } from "../IngredientDetails/ingredient-details";
 import styles from './ingredients-section.module.css';
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";

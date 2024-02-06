@@ -3,7 +3,7 @@ import styles from "./app.module.css";
 
 import { AppHeader } from "../AppHeader/app-header"
 import { BurgerIngredients } from "../BurgerIngredients/burger-Ingredients";
-import { BurgersContructor } from "../BurgerConstructor/BurgerConstructor";
+import { BurgersContructor } from "../BurgerConstructor/burger-constructor";
 import { useEffect, useState } from "react";
 
 const mainurl = 'https://norma.nomoreparties.space/api/'
