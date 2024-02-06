@@ -1,7 +1,7 @@
 import styles from "./app.module.css";
 //import { data } from "../../utils/data";
 
-import { AppHeader } from "../appHeader/app-header"
+import { AppHeader } from "../AppHeader/app-header"
 import { BurgerIngredients } from "../BurgerIngredients/burger-Ingredients";
 import { BurgersContructor } from "../BurgerConstructor/BurgerConstructor";
 import { useEffect, useState } from "react";

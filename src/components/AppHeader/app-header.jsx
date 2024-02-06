@@ -1,6 +1,6 @@
 import styles from './app-header.module.css'
 import { Logo, ListIcon, BurgerIcon, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavigationElement } from './header-navigation';
+import { NavigationElement } from './header-navigation'
 
 export  function AppHeader () {
     return (
