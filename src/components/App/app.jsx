@@ -29,10 +29,6 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <pre style={{
-      	margin: "0",
-      	fontSize: "1.5rem"
-      }}>
       	<AppHeader />
         <main className={styles.container}>
           <section>
@@ -44,8 +40,6 @@ function App() {
           </section>
 
         </main>
-
-      </pre>
     </div>
   );
 }
