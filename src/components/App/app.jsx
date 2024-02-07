@@ -29,17 +29,17 @@ function App() {
 
   return (
     <div className={styles.app}>
-      	<AppHeader />
-        <main className={styles.container}>
-          <section>
-          <BurgerIngredients  ingredients={ingredients}/>
-          </section>
-          <section>
-          <BurgersContructor ingredients={ingredients}/>
+      <AppHeader />
+      <main className={styles.container}>
+        <section>
+          <BurgerIngredients ingredients={ingredients} />
+        </section>
+        <section>
+          <BurgersContructor ingredients={ingredients} />
 
-          </section>
+        </section>
 
-        </main>
+      </main>
     </div>
   );
 }
