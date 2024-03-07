@@ -1,8 +1,8 @@
 import styles from "./ingredient-compound.module.css";
 import PropTypes from 'prop-types';
 
-export function IngredientCompound ({calories, carbohydrates, fat, image, name, proteins })  {
 
+export function IngredientCompound ({calories, carbohydrates, fat, image, name, proteins })  {
 
   return (
     <>

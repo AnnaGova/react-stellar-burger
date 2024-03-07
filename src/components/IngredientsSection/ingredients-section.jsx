@@ -1,41 +1,51 @@
 import { IngredietDetails } from "../IngredientDetails/ingredient-details";
 import styles from './ingredients-section.module.css';
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
+import { modalActions,  selectActiveModal} from '../../services/slice/modalSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
+import PropTypes from 'prop-types';
+//import { bunsInCinstructor } from "../../services/slice/burgerConstructorSlice";
 
-export function IngredientsSection({ ingredients, sectionName }) {
-  const [ingredientModal, setSelectedIngredient] = useState(null);
 
-  const openModal = (ingredient) => {
-    setSelectedIngredient(ingredient);
-  };
+export function IngredientsSection({  sectionName, type }) {
 
-  const closeModal = () => {
-    setSelectedIngredient(null);
-  };
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modal);
+  const activeModal = useSelector(selectActiveModal);
+  const ingr = useSelector(selectAllIngredients);
+  const filt = ingr.filter((ingredient)=> ingredient.type === type)
+  //const buns = useSelector(bunsInCinstructor)
+
 
   return (
     <>
       <h2 className="text text_type_main-medium pt-5">{sectionName}</h2>
       <ul className={styles.ingredients_list}>
-        {ingredients.map((ingredient, index) => (
-          <li className={styles.ingredient} key={index} onClick={() => openModal(ingredient)}>
+        {filt.map(data => (
+          <li key={data._id} className={styles.ingredient}  onClick={() => {
+            dispatch(modalActions.openModal({ isOpen: true, title:'Детали ингердиента', content: {...data}, active: 'ingredients' }));
+          }}>
             <IngredietDetails
-              image={ingredient.image}
-              price={ingredient.price}
-              name={ingredient.name}
+              key={data}
+              {...data}
             />
             <Counter />
           </li>
         ))}
       </ul>
-      {ingredientModal && (
-        <Modal isOpen={true} onClose={closeModal} title="Детали ингредиента">
-          <IngredientCompound {...ingredientModal} />
+      {modalState.isOpen && activeModal === 'ingredients' && (
+        <Modal  onClose={() => dispatch(modalActions.closeModal())}>
+          <IngredientCompound {...modalState.content} />
         </Modal>
       )}
     </>
   );
 }
+
+IngredientsSection.propTypes = {
+  sectionName: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};

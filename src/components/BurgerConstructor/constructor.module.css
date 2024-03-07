@@ -3,7 +3,7 @@
   height: 912px;
   background: #131316;
   white-space: normal;
-  overflow: scroll;
+  /*overflow: scroll;*/
 
 }
 
@@ -21,12 +21,14 @@
 }
 
 .added_items {
+  height: 60vh;
   display: flex;
   flex-direction: column;
   list-style: none;
   gap: 16px;
   padding: 0;
   margin: 16px 0;
+  overflow-y: scroll;
 }
 
 .item {
@@ -40,4 +42,9 @@
   flex-direction: 'column';
   gap: '10px';
   height: '563px';
+}
+
+.title {
+  text-align: center;
+  font-size: 30px;
 }

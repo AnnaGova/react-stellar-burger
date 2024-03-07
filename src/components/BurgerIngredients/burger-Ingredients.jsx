@@ -1,15 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsSection } from '../IngredientsSection/ingredients-section';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchAllIngredients } from "../../services/slice/ingredientsSlice";
+import { useInView } from 'react-intersection-observer';
 
 
-export function BurgerIngredients({ ingredients, sectionName }) {
+
+
+export function BurgerIngredients() {
   const [current, setCurrent] = useState('one')
+  const dispatch = useDispatch();
+  const {loading, error} = useSelector(state => state.ingredients)
+  const [bunsRef, bunsInView] = useInView();
+  const [saucesRef, saucesInView] = useInView();
+  const [stuffingRef, mainInView] = useInView();
 
-  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
-  const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
-  const stuffing = ingredients.filter((ingredient) => ingredient.type === 'main');
+  useEffect(() => {
+    dispatch(fetchAllIngredients(["bun", "main", "sauce"]));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (bunsInView) {
+      setCurrent('one');
+    } else if (saucesInView) {
+      setCurrent('two');
+    } else if (mainInView) {
+      setCurrent('three');
+    }
+  }, [bunsInView, saucesInView, mainInView]);
+
 
   return (
     <section className={styles.container}>
@@ -26,14 +49,22 @@ export function BurgerIngredients({ ingredients, sectionName }) {
           Начинки
         </Tab>
       </div>
-        <IngredientsSection sectionName="Булки" ingredients={buns} />
-        <IngredientsSection sectionName="Соусы" ingredients={sauces} />
-        <IngredientsSection sectionName="Начинка" ingredients={stuffing} />
 
+      {loading || error ? (
+        <p className={styles.loading}>{loading ? 'Идет загрузка ингредиентов' : `Произошла ошибка: ${error}`}</p>
+      ) : (
+        <>
+          <div ref={bunsRef}>
+            <IngredientsSection sectionName="Булки" type="bun"/>
+          </div>
+          <div ref={stuffingRef}>
+            <IngredientsSection sectionName="Начинки" type="main"/>
+          </div>
+          <div ref={saucesRef}>
+            <IngredientsSection sectionName="Соусы" type="sauces"/>
+          </div>
+        </>
+      )}
     </section>
-  );
-}
-
-
-
-
+  )
+};

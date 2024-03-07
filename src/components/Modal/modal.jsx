@@ -27,7 +27,6 @@ export function Modal ({title, onClose, children, isOpen, handleClosePopup }) {
   return createPortal(
     (
       <>
-      { isOpen && (
         <div >
           <div className={styles.container}>
             <div className={`${styles.header} pt-10 pr-10 ml-10`}>
@@ -40,7 +39,7 @@ export function Modal ({title, onClose, children, isOpen, handleClosePopup }) {
           </div>
           <Overlay onClick={() => onClose()} />
         </div>
-         )}
+
       </>
 
     ),
