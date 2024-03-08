@@ -1,12 +1,12 @@
 import styles from "./ingredient-compound.module.css";
 import PropTypes from 'prop-types';
 
-export function IngredientCompound ({calories, carbohydrates, fat, image, name, proteins })  {
 
+export function IngredientCompound({ calories, carbohydrates, fat, image, name, proteins }) {
 
   return (
-    <>
-      <div className={`${styles.container} pl-25 pr-25 pb-15`}>
+
+    <div className={`${styles.container} pl-25 pr-25 pb-15`}>
       <img className={styles.image} src={image} alt={name} />
       <h3 className="text_type_main-medium mt-4 mb-8">{name}</h3>
       <ul className={`${styles.list} text text_type_main-default text_color_inactive`}>
@@ -30,7 +30,7 @@ export function IngredientCompound ({calories, carbohydrates, fat, image, name, 
     </div>
 
 
-    </>
+
   );
 }
 
