@@ -20,7 +20,7 @@ export function BurgerIngredients() {
   const [stuffingRef, mainInView] = useInView();
 
   useEffect(() => {
-    dispatch(fetchAllIngredients(["bun", "main", "sauce"]));
+    dispatch(fetchAllIngredients());
   }, [dispatch]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export function BurgerIngredients() {
       {loading || error ? (
         <p className={styles.loading}>{loading ? 'Идет загрузка ингредиентов' : `Произошла ошибка: ${error}`}</p>
       ) : (
-        <>
+        <div className={styles.scroll_wraper}>
           <div ref={bunsRef}>
             <IngredientsSection sectionName="Булки" type="bun"/>
           </div>
@@ -61,9 +61,9 @@ export function BurgerIngredients() {
             <IngredientsSection sectionName="Начинки" type="main"/>
           </div>
           <div ref={saucesRef}>
-            <IngredientsSection sectionName="Соусы" type="sauces"/>
+            <IngredientsSection sectionName="Соусы" type="sauce"/>
           </div>
-        </>
+        </div>
       )}
     </section>
   )

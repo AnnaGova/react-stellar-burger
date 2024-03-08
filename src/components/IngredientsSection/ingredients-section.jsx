@@ -7,17 +7,21 @@ import { modalActions,  selectActiveModal} from '../../services/slice/modalSlice
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
 import PropTypes from 'prop-types';
-//import { bunsInCinstructor } from "../../services/slice/burgerConstructorSlice";
+import { bunsInConstructor } from "../../services/slice/burgerConstructorSlice"
+import { IngredientsAdded } from "../../services/slice/burgerConstructorSlice";
 
 
-export function IngredientsSection({  sectionName, type }) {
+export function IngredientsSection({  sectionName, type, title }) {
 
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modal);
   const activeModal = useSelector(selectActiveModal);
   const ingr = useSelector(selectAllIngredients);
   const filt = ingr.filter((ingredient)=> ingredient.type === type)
-  //const buns = useSelector(bunsInCinstructor)
+  const buns = useSelector(bunsInConstructor)
+  const addedIngredients = useSelector(IngredientsAdded)
+
+
 
 
   return (
@@ -26,18 +30,19 @@ export function IngredientsSection({  sectionName, type }) {
       <ul className={styles.ingredients_list}>
         {filt.map(data => (
           <li key={data._id} className={styles.ingredient}  onClick={() => {
-            dispatch(modalActions.openModal({ isOpen: true, title:'Детали ингердиента', content: {...data}, active: 'ingredients' }));
+            dispatch(modalActions.openModal({ isOpen: true, content: {...data}, active: 'ingredients' }));
+
           }}>
             <IngredietDetails
               key={data}
               {...data}
             />
-            <Counter />
+            <Counter count={(sectionName === "Булки" && buns && buns._id === data._id ? 2 : addedIngredients.filter(ingredient => ingredient._id === data._id).length)}/>
           </li>
         ))}
       </ul>
       {modalState.isOpen && activeModal === 'ingredients' && (
-        <Modal  onClose={() => dispatch(modalActions.closeModal())}>
+        <Modal title="Детали ингердиента" onClose={() => dispatch(modalActions.closeModal())}>
           <IngredientCompound {...modalState.content} />
         </Modal>
       )}

@@ -4,3 +4,11 @@
   justify-content: center;
   gap: 8px;
 }
+.item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}

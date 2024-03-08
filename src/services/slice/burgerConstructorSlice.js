@@ -13,7 +13,7 @@ export const burgerConstructorSlice = createSlice({
   reducers: {
     addIngredient: (state, action) => {
       if (action.payload && action.payload.type === 'bun') {
-        //state.burgerIngredients = state.burgerIngredients.filter(ingredient => ingredient.type !== 'bun');
+        state.burgerIngredients = state.burgerIngredients.filter(ingredient => ingredient.type !== 'bun');
         state.bun = action.payload;
       } else {
         state.burgerIngredients.push({ ...action.payload, id: uuid() });
@@ -37,4 +37,5 @@ export const burgerConstructorSlice = createSlice({
 
 export const burgerConstructorReducer = burgerConstructorSlice.reducer;
 export const burgerConstructorActions = burgerConstructorSlice.actions;
-export const bunsInCinstructor = state => state.burgerConstructor.bun;
+export const bunsInConstructor = state => state.burgerConstructor.bun;
+export const IngredientsAdded = state => state.burgerConstructor.burgerIngredients;

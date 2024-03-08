@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const fetchOrder = createAsyncThunk(
-  'order/fetchOrder',
+  'order/fetchOrderResult',
   async (ingredients) => {
       const data = await createOrder(ingredients);
       return data;
@@ -31,14 +31,14 @@ export const orderSlice = createSlice({
 
       .addCase(fetchOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.order = action.payload.order;
+        state.newOrder = action.payload.order;
         state.error = null;
       })
 
       .addCase(fetchOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-        state.order = null; // Установка состояния order в null при возникновении ошибки
+        state.newOrder = null; // Установка состояния order в null при возникновении ошибки
       });
   }
 });

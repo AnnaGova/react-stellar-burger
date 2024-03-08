@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 const modalRoot = document.getElementById('modal');
 
-export function Modal ({title, onClose, children, isOpen, handleClosePopup }) {
+export function Modal ({title, onClose, children}) {
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Escape') {

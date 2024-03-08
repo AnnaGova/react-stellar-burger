@@ -2,10 +2,14 @@
   min-width: 600px;
   height: 912px;
   background: #131316;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .tab {
   display: flex;
 }
 
+.scroll_wraper {
+  overflow-y: scroll;
+  height: 70vh;
+}

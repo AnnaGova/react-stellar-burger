@@ -12,19 +12,20 @@ import BurgerConstructorItem from '../BurgerConstructorItem/burger-constructor-i
 import { useDrop } from 'react-dnd';
 import { fetchOrder } from '../../services/slice/orderSlice';
 import { selectAllIngredients } from '../../services/slice/ingredientsSlice';
+import { bunsInConstructor } from '../../services/slice/burgerConstructorSlice';
 
 export function BurgersContructor() {
 
   const ingredientsInConstructor = useSelector((state) => state.burgerConstructor.burgerIngredients);//игредиенты, которые нахоятся в конструкторе
   const dispatch = useDispatch();
-  const bun = useSelector(state => state.burgerConstructor.bun);//булки, которые находятся в конструкторе
+  const bun = useSelector(bunsInConstructor);//булки, которые находятся в конструкторе
   const modalState = useSelector(state => state.modal);
   const activeModal = useSelector(selectActiveModal);
   const ingredients = useSelector(selectAllIngredients);// все ингредиенты
 
-  console.log(bun, 'булки')
+  // console.log(bun, 'булки')
 
-  console.log(ingredientsInConstructor)
+  // console.log(ingredientsInConstructor)
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -49,9 +50,9 @@ export function BurgersContructor() {
 
 
 
-
+// console.log(bun, "constructor bulok")
   // useEffect(() => {
-  //   dispatch(burgerConstructorActions.addIngredient(draggedIngredient));
+  //   dispatch(burgerConstructorActions.addIngredient());
   // }, [dispatch]);
 
 
@@ -62,8 +63,10 @@ export function BurgersContructor() {
 
       ingredientsInConstructor.forEach(addedIngredient => {
         const ingredient = ingredients.find(ingredient => ingredient._id === addedIngredient._id);
-        if (ingredient) {
-          totalPrice += ingredient.price + bun.price*2;
+        if ( bun ) {
+          totalPrice +=  (bun.price * 2);
+        } else {
+          totalPrice += ingredient.price;
         }
       });
       return totalPrice;
@@ -95,14 +98,14 @@ export function BurgersContructor() {
 
         <ul className={styles.added_items}>
           {ingredientsInConstructor.map((ingredient, index) => (
-            <>
-              <BurgerConstructorItem
-                item={ingredient}
-                index={index}
-                key={ingredient.id}
-                handleDeleteIngredient={handleDeleteIngredient}
-              />
-            </>
+
+            <BurgerConstructorItem
+              item={ingredient}
+              index={index}
+              key={ingredient.id}
+              handleDeleteIngredient={handleDeleteIngredient}
+            />
+
           ))}
         </ul>
         {bun && (
