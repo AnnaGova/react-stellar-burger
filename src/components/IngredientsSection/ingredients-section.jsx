@@ -11,6 +11,7 @@ import { bunsInConstructor } from "../../services/slice/burgerConstructorSlice"
 import { IngredientsAdded } from "../../services/slice/burgerConstructorSlice";
 
 
+
 export function IngredientsSection({  sectionName, type, title }) {
 
   const dispatch = useDispatch();
@@ -29,21 +30,22 @@ export function IngredientsSection({  sectionName, type, title }) {
       <h2 className="text text_type_main-medium pt-5">{sectionName}</h2>
       <ul className={styles.ingredients_list}>
         {filt.map(data => (
-          <li key={data._id} className={styles.ingredient}  onClick={() => {
-            dispatch(modalActions.openModal({ isOpen: true, content: {...data}, active: 'ingredients' }));
+          <li key={data._id} className={styles.ingredient}  onClickIngredient={() => {
+            dispatch(modalActions.openModal({ isOpen: true, content: {...data}, active: 'ingredient' }));
 
           }}>
             <IngredietDetails
               key={data}
               {...data}
+
             />
             <Counter count={(sectionName === "Булки" && buns && buns._id === data._id ? 2 : addedIngredients.filter(ingredient => ingredient._id === data._id).length)}/>
           </li>
         ))}
       </ul>
-      {modalState.isOpen && activeModal === 'ingredients' && (
+      {modalState.isOpen && activeModal === 'ingredient' && (
         <Modal title="Детали ингердиента" onClose={() => dispatch(modalActions.closeModal())}>
-          <IngredientCompound {...modalState.content} />
+          <IngredientCompound  />
         </Modal>
       )}
     </>
