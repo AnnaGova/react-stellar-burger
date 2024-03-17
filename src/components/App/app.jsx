@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/slice/UserSlice";
-import { ResetPasswordPage } from "../../pages/reset-password /reset-password";
+import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
 
