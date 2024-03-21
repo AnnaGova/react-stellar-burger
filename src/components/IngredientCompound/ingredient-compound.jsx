@@ -1,44 +1,43 @@
 import styles from "./ingredient-compound.module.css";
-import PropTypes from 'prop-types';
+import { useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
+
+export function IngredientCompound() {
+  const { id } = useParams();
+  const ingredients = useSelector(selectAllIngredients);
+  const ingredient = ingredients.find((item) => item._id === id);
 
 
-export function IngredientCompound({ calories, carbohydrates, fat, image, name, proteins }) {
+
+  if (!ingredient) {
+    console.error("Ингредиент не найден");
+    return null; // Или что-то другое, что должно отображаться, если ингредиент не найден
+  }
 
   return (
-
     <div className={`${styles.container} pl-25 pr-25 pb-15`}>
-      <img className={styles.image} src={image} alt={name} />
-      <h3 className="text_type_main-medium mt-4 mb-8">{name}</h3>
+      <img className={styles.image} src={ingredient.image} alt={ingredient.name} />
+      <h3 className="text_type_main-medium mt-4 mb-8">{ingredient.name}</h3>
       <ul className={`${styles.list} text text_type_main-default text_color_inactive`}>
         <li className={styles.item}>
           <p>Калории, ккал</p>
-          <p className="text text_type_digits-default">{calories}</p>
+          <p className="text text_type_digits-default">{ingredient.calories}</p>
         </li>
         <li className={styles.item}>
           <p>Белки, г</p>
-          <p className="text text_type_digits-default">{proteins}</p>
+          <p className="text text_type_digits-default">{ingredient.proteins}</p>
         </li>
         <li className={styles.item}>
           <p>Жиры, г</p>
-          <p className="text text_type_digits-default">{fat}</p>
+          <p className="text text_type_digits-default">{ingredient.fat}</p>
         </li>
         <li className={styles.item}>
           <p>Углеводы, г</p>
-          <p className="text text_type_digits-default">{carbohydrates}</p>
+          <p className="text text_type_digits-default">{ingredient.carbohydrates}</p>
         </li>
       </ul>
     </div>
-
-
-
   );
 }
 
-IngredientCompound.propTypes = {
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-};

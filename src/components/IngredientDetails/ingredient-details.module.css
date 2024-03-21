@@ -12,3 +12,7 @@
   cursor: pointer;
   position: relative;
 }
+.link {
+  text-decoration: none;
+  color: inherit;
+}

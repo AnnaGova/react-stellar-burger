@@ -4,8 +4,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsSection } from '../IngredientsSection/ingredients-section';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { fetchAllIngredients } from "../../services/slice/ingredientsSlice";
+// import { useDispatch } from 'react-redux';
+// import { fetchAllIngredients } from "../../services/slice/ingredientsSlice";
 import { useInView } from 'react-intersection-observer';
 
 
@@ -13,15 +13,15 @@ import { useInView } from 'react-intersection-observer';
 
 export function BurgerIngredients() {
   const [current, setCurrent] = useState('one')
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const {loading, error} = useSelector(state => state.ingredients)
   const [bunsRef, bunsInView] = useInView();
   const [saucesRef, saucesInView] = useInView();
   const [stuffingRef, mainInView] = useInView();
 
-  useEffect(() => {
-    dispatch(fetchAllIngredients());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchAllIngredients());
+  // }, [dispatch]);
 
   useEffect(() => {
     if (bunsInView) {

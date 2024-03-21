@@ -40,7 +40,7 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-export const selectAllIngredients = (state) => state.ingredients.allIngredients;
+export const selectAllIngredients = state => state.ingredients.allIngredients;
 
 export const { actions: ingredientsActions, reducer: ingredientsReducer } = ingredientsSlice;
 
