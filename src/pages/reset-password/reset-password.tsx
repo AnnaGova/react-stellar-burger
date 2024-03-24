@@ -24,11 +24,11 @@ export function ResetPasswordPage() {
     return <Navigate to="/forgot-password" />;
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPasswords(form));
     setRedirectToResetPassword(true);

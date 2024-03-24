@@ -1,21 +1,41 @@
 // orderSlice.js
 // orderSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createOrder } from '../../utils/api';
+import { createOrder,  } from '../../utils/api';
+import { OrderType } from '../../utils/prop-types';
+// import { RootState } from '../store';
 
-const initialState = {
+interface IOrderDetailsState {
+  newOrder: { number: number | null; } | null;
+  currentOrder: OrderType | null;
+  loading: boolean; // Флаг загрузки
+  error: string | null; // Ошибка (если есть)
+}
+
+
+const initialState: IOrderDetailsState = {
   newOrder: null,
   loading: true,
   error: null,
+  currentOrder: null,
 };
 
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrderResult',
-  async (ingredients) => {
+  async (ingredients: any) => {
       const data = await createOrder(ingredients);
       return data;
   }
 );
+
+// export const getOrder = createAsyncThunk<
+//   OrderType,
+//   string,
+//   { state: RootState }
+// >(`${sliceName}/getOrder`, async (number) => {
+//   const data = await api.getOrderApi(number);
+//   return data.orders[0];
+// });
 
 
 export const orderSlice = createSlice({
@@ -37,7 +57,7 @@ export const orderSlice = createSlice({
 
       .addCase(fetchOrder.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.error.message || null;
         state.newOrder = null; // Установка состояния order в null при возникновении ошибки
       });
   }

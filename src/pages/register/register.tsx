@@ -2,33 +2,28 @@ import styles from './register.module.css'
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../services/slice/UserSlice';
+// import { useDispatch } from 'react-redux';
+// import { registerUser } from '../../services/slice/UserSlice';
 
-export function RegisterPage() {
-  const dispatch = useDispatch();
+interface RegisterPageProps {
+  onRegister: (data: { name: string; email: string; password: string }) => void;
+}
+
+export function RegisterPage({ onRegister }: RegisterPageProps) {
+  // const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(registerUser(formData)) // Вызываем функцию registerUser из Redux slice и передаем ей данные формы
-      .unwrap() // Извлекаем полезную нагрузку из обещания
-      .then((response) => {
-        // Обработка успешной регистрации
-        console.log("Успешная регистрация:", response);
-      })
-      .catch((error) => {
-        // Обработка ошибки регистрации
-        console.error("Ошибка регистрации:", error);
-      });
+    onRegister(formData);
   };
 
 

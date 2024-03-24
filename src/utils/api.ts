@@ -1,24 +1,25 @@
 import { getCookie, setCookie } from "./cookie";
+// import { GetOrderType } from "./prop-types";
 const mainUrl = "https://norma.nomoreparties.space/api";
 
 // import { getCookie, setCookie } from "./cookie";
 
-function checkResponse(res) {
+function checkResponse(res: Response): Promise<any> {
   if (res.ok) {
       return res.json();
   }
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-function request(endpoint, options) {
+function request(endpoint: string, options: RequestInit = {}): Promise<any> {
   return fetch(`${mainUrl}${endpoint}`, options).then(checkResponse);
 }
 
-function getIngredients() {
+function getIngredients(): Promise<any> {
   return request("/ingredients");
 }
 
-function createOrder(ingredients) {
+function createOrder(ingredients: string): Promise<any> {
   return request("/orders", {
     method: "POST",
     headers: {
@@ -28,7 +29,7 @@ function createOrder(ingredients) {
   });
 }
 
-async function refreshToken() {
+async function refreshToken(): Promise<any> {
   // Функция для обновления токена
   try {
     const refreshToken = getCookie("refreshToken"); // Получаем refreshToken из cookie
@@ -45,28 +46,33 @@ async function refreshToken() {
   }
 }
 
-async function requestWithRefresh(endpoint, options = {}) {
+async function requestWithRefresh(endpoint: string, options: RequestInit = {}): Promise<any> {
   // Функция для выполнения запросов с обновлением токена
   try {
-    const res = await request(endpoint, options);
-    return res;
+    const res = await request(endpoint, options); // Выполняем запрос к API
+    return res; // Возвращаем результат запроса
   } catch (error) {
     // Обрабатываем ошибки
     console.log("requestWithRefresh");
-    if (error.statusCode === 401 || error.statusCode === 403) {
+    if (
+      (error as any).statusCode === 401 ||
+      (error as any).statusCode === 403
+    ) {
+      // Если получена ошибка авторизации или доступа
       try {
-        const refreshData = await this.refreshToken();
+        const refreshData = await refreshToken(); // Обновляем токен
         if (!refreshData.success) {
+          // Если обновление токена неуспешно
           return Promise.reject(refreshData);
         }
-        setCookie("accessToken", refreshData.accessToken);
-        setCookie("refreshToken", refreshData.refreshToken);
+        setCookie("accessToken", refreshData.accessToken); // Устанавливаем новый accessToken в cookie
+        setCookie("refreshToken", refreshData.refreshToken); // Устанавливаем новый refreshToken в cookie
         return await request(endpoint, {
-
+          // Повторно выполняем исходный запрос с обновленным токеном
           ...options,
           headers: {
             ...options.headers,
-            authorization: refreshData.accessToken,
+            authorization: refreshData.accessToken, // Устанавливаем заголовок авторизации с новым accessToken
           },
         });
       } catch (error) {
@@ -77,7 +83,7 @@ async function requestWithRefresh(endpoint, options = {}) {
   }
 }
 
-function getRegisterUser(data) {
+function getRegisterUser(data: {email: string; password: string; name: string;}): Promise<any> {
   return request("/auth/register", {
     method: "POST",
     headers: {
@@ -87,7 +93,7 @@ function getRegisterUser(data) {
   });
 }
 
-function getLoginUser(data) {
+function getLoginUser(data: { email: string; password: string }): Promise<any> {
   return requestWithRefresh("/auth/login", {
     method: "POST",
     headers: {
@@ -97,7 +103,7 @@ function getLoginUser(data) {
   });
 }
 
-function getUser() {
+function getUser(): Promise<any> {
   const accessToken = getCookie("accessToken");
   if (!accessToken) {
     throw new Error("Токен не найден");
@@ -112,7 +118,7 @@ function getUser() {
   });
 }
 
-function forgotPassword(email) {
+function forgotPassword(email: string): Promise<any> {
   return request("/password-reset", {
     method: "POST",
     headers: {
@@ -122,7 +128,7 @@ function forgotPassword(email) {
   });
 }
 
-function resetPassword(data) {
+function resetPassword(data: {password: string; token: string;}): Promise<any> {
   return request("/password-reset/reset", {
     method: "POST",
     headers: {
@@ -132,7 +138,7 @@ function resetPassword(data) {
   });
 }
 
-function updateProfile(data) {
+function updateProfile(data: {email: string; name: string; password: string;}): Promise<any> {
   const accessToken = getCookie("accessToken");
   if (!accessToken) {
     throw new Error("Токен не найден");
@@ -148,7 +154,7 @@ function updateProfile(data) {
   });
 }
 
-function logoutUser() {
+function logoutUser(): Promise<any> {
   return request("/auth/logout", {
     method: "POST",
     headers: {
@@ -160,6 +166,6 @@ function logoutUser() {
 
 
 
-export { getIngredients, createOrder, refreshToken, requestWithRefresh, getRegisterUser, getLoginUser, getUser, forgotPassword, resetPassword, updateProfile, logoutUser };
+export { getIngredients, createOrder, refreshToken, requestWithRefresh, getRegisterUser, getLoginUser, getUser, forgotPassword, resetPassword, updateProfile, logoutUser, };
 
 

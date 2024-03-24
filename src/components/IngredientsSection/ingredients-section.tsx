@@ -9,13 +9,19 @@ import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
 import PropTypes from 'prop-types';
 import { bunsInConstructor } from "../../services/slice/burgerConstructorSlice"
 import { IngredientsAdded } from "../../services/slice/burgerConstructorSlice";
+import { RootState } from "../../services/store";
+
+interface IingredientsSection {
+  sectionName: string;
+  type: string;
+}
 
 
 
-export function IngredientsSection({  sectionName, type, title }) {
+export const  IngredientsSection:React.FC<IingredientsSection> = ({  sectionName, type}) => {
 
   const dispatch = useDispatch();
-  const modalState = useSelector(state => state.modal);
+  const modalState = useSelector((state: RootState) => state.modal);
   const activeModal = useSelector(selectActiveModal);
   const ingr = useSelector(selectAllIngredients);
   const filt = ingr.filter((ingredient)=> ingredient.type === type)
@@ -30,12 +36,9 @@ export function IngredientsSection({  sectionName, type, title }) {
       <h2 className="text text_type_main-medium pt-5">{sectionName}</h2>
       <ul className={styles.ingredients_list}>
         {filt.map(data => (
-          <li key={data._id} className={styles.ingredient}  onClickIngredient={() => {
-            dispatch(modalActions.openModal({ isOpen: true, content: {...data}, active: 'ingredient' }));
-
-          }}>
+          <li key={data._id} className={styles.ingredient}>
             <IngredietDetails
-              key={data}
+              key={data._id}
               {...data}
 
             />
@@ -44,7 +47,7 @@ export function IngredientsSection({  sectionName, type, title }) {
         ))}
       </ul>
       {modalState.isOpen && activeModal === 'ingredient' && (
-        <Modal title="Детали ингердиента" onClose={() => dispatch(modalActions.closeModal())}>
+        <Modal title="Детали Ингредиента" onClose={() => dispatch(modalActions.closeModal())}>
           <IngredientCompound  />
         </Modal>
       )}

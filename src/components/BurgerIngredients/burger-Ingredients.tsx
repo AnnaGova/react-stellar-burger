@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 // import { fetchAllIngredients } from "../../services/slice/ingredientsSlice";
 import { useInView } from 'react-intersection-observer';
+import { RootState } from '../../services/store';
 
 
 
@@ -14,7 +15,7 @@ import { useInView } from 'react-intersection-observer';
 export function BurgerIngredients() {
   const [current, setCurrent] = useState('one')
   // const dispatch = useDispatch();
-  const {loading, error} = useSelector(state => state.ingredients)
+  const {loading, error} = useSelector((state: RootState) => state.ingredients)
   const [bunsRef, bunsInView] = useInView();
   const [saucesRef, saucesInView] = useInView();
   const [stuffingRef, mainInView] = useInView();

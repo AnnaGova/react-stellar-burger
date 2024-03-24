@@ -1,17 +1,24 @@
 import { v4 as uuid } from 'uuid';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IngredientType } from "../../utils/prop-types";
 
 
-const initialState = {
+interface IConstructorState {
+  bun: IngredientType | null;
+  burgerIngredients: IngredientType[];
+}
+
+const initialState: IConstructorState = {
   burgerIngredients: [],
   bun: null,
 };
+
 
 export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state, action) => {
+    addIngredient: (state, action: PayloadAction<IngredientType>) => {
       if (action.payload && action.payload.type === 'bun') {
         state.burgerIngredients = state.burgerIngredients.filter(ingredient => ingredient.type !== 'bun');
         state.bun = action.payload;
@@ -19,7 +26,7 @@ export const burgerConstructorSlice = createSlice({
         state.burgerIngredients.push({ ...action.payload, id: uuid() });
       }
     },
-    removeIngredient: (state, action) => {
+    removeIngredient: (state, action: PayloadAction<{ id: string }>) => {
       const { id } = action.payload;
       state.burgerIngredients = state.burgerIngredients.filter(ingredient => ingredient.id !== id);
     },
@@ -37,5 +44,5 @@ export const burgerConstructorSlice = createSlice({
 
 export const burgerConstructorReducer = burgerConstructorSlice.reducer;
 export const burgerConstructorActions = burgerConstructorSlice.actions;
-export const bunsInConstructor = state => state.burgerConstructor.bun;
-export const IngredientsAdded = state => state.burgerConstructor.burgerIngredients;
+export const bunsInConstructor = (state: {burgerConstructor: IConstructorState}) => state.burgerConstructor.bun;
+export const IngredientsAdded = (state: {burgerConstructor: IConstructorState}) => state.burgerConstructor.burgerIngredients;

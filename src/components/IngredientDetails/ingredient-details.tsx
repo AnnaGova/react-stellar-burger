@@ -1,12 +1,19 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './ingredient-details.module.css'
 import { useDrag, DragPreviewImage } from "react-dnd";
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
+interface IBurgerIngredientDetails {
+  _id: string;
+  image: string;
+  name: string;
+  price: number;
+}
 
-export function IngredietDetails({ _id, image, name, price, onClickIngredient }) {
+
+export function IngredietDetails({_id, image, name, price}: IBurgerIngredientDetails ) {
   const location = useLocation();
   const itemMargin = "mt-5 ml-4";
   const [{ isDragging }, dragRef, preview] = useDrag({
@@ -37,9 +44,9 @@ export function IngredietDetails({ _id, image, name, price, onClickIngredient })
 
 }
 
-IngredietDetails.propTypes = {
-  _id: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-};
+// IngredietDetails.propTypes = {
+//   _id: PropTypes.string.isRequired,
+//   image: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+//   price: PropTypes.number.isRequired,
+// };

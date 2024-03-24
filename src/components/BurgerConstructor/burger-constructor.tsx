@@ -1,59 +1,55 @@
 import styles from './constructor.module.css'
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from '../Modal/modal';
 import { useMemo } from 'react';
 import { OrderDetails } from '../OrderDetails/order-details';
 import { burgerConstructorActions } from '../../services/slice/burgerConstructorSlice';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import { modalActions, selectActiveModal } from '../../services/slice/modalSlice';
 import BurgerConstructorItem from '../BurgerConstructorItem/burger-constructor-item';
 import { useDrop } from 'react-dnd';
 import { fetchOrder } from '../../services/slice/orderSlice';
 import { selectAllIngredients } from '../../services/slice/ingredientsSlice';
 import { bunsInConstructor } from '../../services/slice/burgerConstructorSlice';
+import { IngredientType } from '../../utils/prop-types';
+import { RootState } from '../../services/store';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export function BurgersContructor() {
 
-  const ingredientsInConstructor = useSelector((state) => state.burgerConstructor.burgerIngredients);//игредиенты, которые нахоятся в конструкторе
+  const ingredientsInConstructor = useSelector((state: RootState) => state.burgerConstructor.burgerIngredients);//игредиенты, которые нахоятся в конструкторе
   const dispatch = useDispatch();
   const bun = useSelector(bunsInConstructor);//булки, которые находятся в конструкторе
-  const modalState = useSelector(state => state.modal);
+  const modalState = useSelector((state: RootState) => state.modal);
   const activeModal = useSelector(selectActiveModal);
   const ingredients = useSelector(selectAllIngredients);// все ингредиенты
+  const user = useSelector((state: RootState) => state.user.data)
+  const navigate = useNavigate();
 
-  // console.log(bun, 'булки')
-
-  // console.log(ingredientsInConstructor)
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop: (droppedIngredientId, monitor) => {
+    drop: (droppedIngredientId: IngredientType, monitor) => {
       onDropHandler(droppedIngredientId);
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver()
     })
   });
 
-  function onDropHandler(droppedIngredientId) {
+  function onDropHandler(droppedIngredientId: IngredientType) {
     // Находим информацию о перетаскиваемом ингредиенте
-    const draggedIngredient = ingredients.find(ingredient => ingredient._id === droppedIngredientId._id);
+    const draggedIngredient = ingredients.find((ingredient) => ingredient._id === droppedIngredientId._id);
 
     if (draggedIngredient) {
       dispatch(burgerConstructorActions.addIngredient(draggedIngredient));
     }
   };
 
-  const handleDeleteIngredient = (item) => dispatch(burgerConstructorActions.removeIngredient(item));
-
-
-
-// console.log(bun, "constructor bulok")
-  // useEffect(() => {
-  //   dispatch(burgerConstructorActions.addIngredient());
-  // }, [dispatch]);
+  const handleDeleteIngredient = (item: IngredientType) => dispatch(burgerConstructorActions.removeIngredient(item));
 
 
   //Функция для расчета суммы заказа
@@ -62,10 +58,10 @@ export function BurgersContructor() {
       let totalPrice = 0;
 
       ingredientsInConstructor.forEach(addedIngredient => {
-        const ingredient = ingredients.find(ingredient => ingredient._id === addedIngredient._id);
+        const ingredient  = ingredients.find(ingredient => ingredient._id === addedIngredient._id);
         if ( bun ) {
           totalPrice +=  (bun.price * 2);
-        } else {
+        } else if (ingredient) { // проверка ингредиента
           totalPrice += ingredient.price;
         }
       });
@@ -123,15 +119,17 @@ export function BurgersContructor() {
             <p className="text text_type_digits-medium mr-2">${finalPrice}</p>
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large" onClick={() => {
+          <Button htmlType="button" type="primary" size="large" onClick={() => { if (!user) {
+            navigate('/login')
+          }
             dispatch(modalActions.openModal({ isOpen: true, content: 'Данные заказа', active: 'order' }));
-            dispatch(fetchOrder({ ingredients: [...ingredientsInConstructor.map((e) => e._id), bun._id] }));
+            dispatch(fetchOrder({ ingredients: [...ingredientsInConstructor.map((e) => e._id), bun ? bun._id : ""] }));
           }} disabled={ingredientsInConstructor.length === 0}>
             Оформить заказ
           </Button>
           {modalState.isOpen && activeModal === 'order' && (
-            <Modal onClose={() => dispatch(modalActions.closeModal())}>
-              <OrderDetails {...modalState.content} />
+            <Modal title={""} onClose={() => dispatch(modalActions.closeModal())}>
+              <OrderDetails />
             </Modal>
           )}
 

@@ -13,14 +13,16 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 
 ReactDOM.render(
-  <DndProvider backend={HTML5Backend}>
-    <Provider store={store}>
-      <Router>
-         <App />
+  <React.StrictMode>
+    <DndProvider backend={HTML5Backend}>
+      <Provider store={store}>
+        <Router>
+          <App />
       </Router>
     </Provider>
-  </DndProvider>,
-  document.getElementById("root")
+  </DndProvider>
+</React.StrictMode>,
+document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
