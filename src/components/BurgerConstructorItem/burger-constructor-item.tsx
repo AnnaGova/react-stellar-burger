@@ -2,13 +2,19 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import { burgerConstructorActions } from "../../services/slice/burgerConstructorSlice"
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useDrag, useDrop } from "react-dnd";
-import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/prop-types";
+import { useDrag, useDrop, XYCoord} from "react-dnd";
+import { IngredientType } from "../../utils/prop-types";
 import styles from "./burger-constructor-item.module.css";
 
-function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
-  const ref = useRef(null);
+interface IBurgerConstructorItem {
+  item: IngredientType;
+  index: number;
+  handleDeleteIngredient: (item: IngredientType) => void;
+}
+
+
+function BurgerConstructorItem({ item, index, handleDeleteIngredient}: IBurgerConstructorItem) {
+  const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
 
   const [{ isDragging }, drag] = useDrag({
@@ -28,7 +34,7 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
@@ -51,7 +57,8 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
       const clientOffset = monitor.getClientOffset();
 
 
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -86,17 +93,10 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
         text={item.name}
         price={item.price}
         thumbnail={item.image}
-        index={index}
         handleClose={() => handleDeleteIngredient(item)}
       />
     </li>
   );
-}
-
-BurgerConstructorItem.propTypes = {
-  item: ingredientType.isRequired,
-  index: PropTypes.number.isRequired,
-  handleDeleteIngredient: PropTypes.func,
 };
 
 export default BurgerConstructorItem;

@@ -1,6 +1,14 @@
 // ingredientsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getIngredients } from '../../utils/api';
+import { IngredientType } from '../../utils/prop-types';
+import { RootState } from '../store';
+
+interface IngredientsState {
+  allIngredients: IngredientType[];
+  loading: boolean;
+  error: string | null;
+}
 
 export const fetchAllIngredients = createAsyncThunk(
   'ingredients/fetchAllIngredients',
@@ -11,7 +19,7 @@ export const fetchAllIngredients = createAsyncThunk(
 );
 
 
-const initialState = {
+const initialState: IngredientsState = {
   allIngredients: [],
   loading: false,
   error: null
@@ -35,12 +43,12 @@ export const ingredientsSlice = createSlice({
       })
       .addCase(fetchAllIngredients.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.error.message || 'Что-то пошло не так';
       });
   }
 });
 
-export const selectAllIngredients = state => state.ingredients.allIngredients;
+export const selectAllIngredients = (state: RootState) => state.ingredients.allIngredients;
 
 export const { actions: ingredientsActions, reducer: ingredientsReducer } = ingredientsSlice;
 

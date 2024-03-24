@@ -1,7 +1,13 @@
 
+import { ReactNode } from 'react';
 import styles from './app-header.module.css'
 
-export function NavigationElement ({ icon, text}) {
+interface INavigationElement {
+  icon: ReactNode;
+  text: string;
+}
+
+export function NavigationElement ({ icon, text}: INavigationElement) {
   return (
     <nav className={styles.navigation_element}>
       {icon}

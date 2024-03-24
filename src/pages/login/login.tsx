@@ -5,21 +5,26 @@ import { useDispatch, } from "react-redux";
 import { loginUser } from "../../services/slice/UserSlice";
 import { useState } from "react";
 
-export function LoginPage() {
+interface LoginPageProps {
+  onLogin: (data: { email: string; password: string }) => void;
+}
 
-  const dispatch = useDispatch();
+
+export function LoginPage({ onLogin }: LoginPageProps) {
+
+  // const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+    onLogin(formData);
   };
 
 

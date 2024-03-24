@@ -1,43 +1,48 @@
 import styles from './profile-info.module.css'
 import React from 'react'
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useEffect } from 'react'
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkUserAuth, updateUserInfo } from '../../services/slice/UserSlice'
 
+
+type UserData = {
+  name: string;
+  email: string;
+} | null;
 
 export function ProfileInfo() {
 
   const [form, setFormValues] = useState({ name: "", email: "", password: "" });
   const [isFormChanged, setIsFormChanged] = useState(false);
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user.data);
+  const userData = useSelector((state: {user: {data: UserData} }) => state.user.data);
 
-  // useEffect(() => {
-  //   setFormValues({
-  //     ...form,
-  //     name: userData.user.name,
-  //     email: userData.user.email,
-  //   });
-  // }, [form, userData.user.email, userData.user.name,]);
+  useEffect(() => {
+    setFormValues({
+      ...form,
+      name: userData?.name || "",
+      email: userData?.email || "",
+    });
+  }, [userData, form]);
 
-  const handleChange = (e) => {
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
     setIsFormChanged(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUserInfo(form));
     dispatch(checkUserAuth());
     setIsFormChanged(false);
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setFormValues({
-      name: userData.user.name,
-      email: userData.user.email,
+      name: userData?.name || "",
+      email: userData?.email || "",
       password: "",
     });
   };
@@ -66,7 +71,7 @@ export function ProfileInfo() {
         extraClass={styles.email_input}
       />
 
-      <PasswordInput
+      <Input
         type={"text"}
         name={"password"}
         placeholder={"Пароль"}

@@ -2,6 +2,9 @@ import {getUser, getLoginUser, getRegisterUser, updateProfile, logoutUser, forgo
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {getActionName, isActionPending, isActionRejected,} from "../../utils/redux-functuons";
 import { deleteCookie, setCookie } from "../../utils/cookie";
+import { PayloadAction } from "@reduxjs/toolkit";
+
+type State = { [key: string]: boolean | null;};
 
 const initialState = {
   IsAuthChecked: false,
@@ -35,7 +38,7 @@ export const checkUserAuth = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   `${sliceName}/registerUser`,
-  async (dataUser) => {
+  async (dataUser: { email: string; password: string; name: string })  => {
     const data = await getRegisterUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
@@ -45,7 +48,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   `${sliceName}/loginUser`,
-  async (dataUser) => {
+  async (dataUser: { email: string; password: string }) => {
     const data = await getLoginUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
@@ -64,7 +67,7 @@ export const logoutUsers = createAsyncThunk(
 
 export const forgotPasswords = createAsyncThunk(
   `${sliceName}/forgotPassword`,
-  async (email) => {
+  async (email: string) => {
     const data = await forgotPassword(email);
     return data;
   }
@@ -72,7 +75,7 @@ export const forgotPasswords = createAsyncThunk(
 
 export const resetPasswords = createAsyncThunk(
   `${sliceName}/resetPassword`,
-  async (data) => {
+  async (data: { password: string; token: string }) => {
     const response = await resetPassword(data);
     return response;
   }
@@ -80,7 +83,7 @@ export const resetPasswords = createAsyncThunk(
 
 export const updateUserInfo = createAsyncThunk(
   `${sliceName}/updateUserInfo`,
-  async (data) => {
+  async (data: { email: string; name: string; password: string }) => {
     const response = await updateProfile(data);
     return response;
   }
@@ -114,14 +117,20 @@ export const userSlice = createSlice({
       .addCase(logoutUsers.fulfilled, (state) => {
         state.data = null;
       })
-      .addMatcher(isActionPending(userSlice.name), (state, action) => {
-        state[`${getActionName(action.type)}Request`] = true;
-        state[`${getActionName(action.type)}Error`] = null;
-      })
-      .addMatcher(isActionRejected(userSlice.name), (state, action) => {
-        state[`${getActionName(action.type)}Request`] = action.payload;
-        state[`${getActionName(action.type)}Error`] = action.error.message;
-      });
+      .addMatcher(
+        isActionPending(userSlice.name),
+        (state: State, action: PayloadAction<any>) => {
+          state[`${getActionName(action)}Request`] = true;
+          state[`${getActionName(action)}Error`] = null;
+        }
+      )
+      .addMatcher(
+        isActionRejected(userSlice.name),
+        (state: State, action: PayloadAction<any>) => {
+          state[`${getActionName(action)}Request`] = action.payload;
+          state[`${getActionName(action)}Error`] = action.payload;
+        }
+      );
   },
 });
 

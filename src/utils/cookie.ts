@@ -1,4 +1,10 @@
-export function getCookie(name) {
+interface ICookieProps {
+  path?: string;
+  expires?: number | Date | string;
+  [key: string]: string | number | Date | undefined;
+}
+
+export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -9,7 +15,11 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props = {}) {
+export function setCookie(
+  name: string,
+  value: string,
+  props: ICookieProps = {}
+): void {
   props = {
     path: "/",
     ...props,
@@ -36,6 +46,6 @@ export function setCookie(name, value, props = {}) {
   document.cookie = updatedCookie;
 }
 
-export const deleteCookie = (name) => {
+export const deleteCookie = (name: string): void => {
   setCookie(name, "", { expires: -1 });
 };

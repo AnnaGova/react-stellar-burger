@@ -1,5 +1,5 @@
 import styles from "./app.module.css";
-import { Routes, Route, Switch} from 'react-router-dom'
+import { Routes, Route} from 'react-router-dom'
 import { AppHeader } from "../AppHeader/app-header"
 import React from 'react';
 import HomePage from "../../pages/home";
@@ -34,11 +34,11 @@ function App() {
     navigate(-1);
   };
 
-  const clbLogin = (dataUser) => {
+  const clbLogin = (dataUser: { email: string; password: string }) => {
     dispatch(getLoginUser(dataUser));
   };
 
-  const clbRegister = (dataUser) => {
+  const clbRegister = (dataUser: {name: string; email: string;  password: string;}) => {
     dispatch(getRegisterUser(dataUser));
   };
 
@@ -103,7 +103,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onlyUnAuth>
                 <ProfilePage />
               </ProtectedRoute>
             }
@@ -119,7 +119,7 @@ function App() {
             <Route
               path="/ingredients/:id"
               element={
-                <Modal onClose={closeModal}>
+                <Modal title="Детали Ингредиента" onClose={closeModal}>
                   <IngredientCompound />
                 </Modal>
               }
