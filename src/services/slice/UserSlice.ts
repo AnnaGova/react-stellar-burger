@@ -1,8 +1,9 @@
-import {getUser, getLoginUser, getRegisterUser, updateProfile, logoutUser, forgotPassword, resetPassword, } from "../../utils/api";
+//import {getUser, getLoginUser, getRegisterUser, updateProfile, logoutUser, forgotPassword, resetPassword, } from "../../utils/api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {getActionName, isActionPending, isActionRejected,} from "../../utils/redux-functuons";
 import { deleteCookie, setCookie } from "../../utils/cookie";
 import { PayloadAction } from "@reduxjs/toolkit";
+import api from "../../utils/api";
 
 type State = { [key: string]: boolean | null;};
 
@@ -26,7 +27,7 @@ export const checkUserAuth = createAsyncThunk(
   `${sliceName}/checkUserAuth`,
   async (_, { dispatch }) => {
     try {
-      const data = await getUser();
+      const data = await api.getUser();
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -39,7 +40,7 @@ export const checkUserAuth = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   `${sliceName}/registerUser`,
   async (dataUser: { email: string; password: string; name: string })  => {
-    const data = await getRegisterUser(dataUser);
+    const data = await api.getRegisterUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
     return data;
@@ -49,7 +50,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   `${sliceName}/loginUser`,
   async (dataUser: { email: string; password: string }) => {
-    const data = await getLoginUser(dataUser);
+    const data = await api.getLoginUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
     return data;
@@ -59,7 +60,7 @@ export const loginUser = createAsyncThunk(
 export const logoutUsers = createAsyncThunk(
   `${sliceName}/logoutUser`,
   async () => {
-    await logoutUser();
+    await api.logoutUser();
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
   }
@@ -68,7 +69,7 @@ export const logoutUsers = createAsyncThunk(
 export const forgotPasswords = createAsyncThunk(
   `${sliceName}/forgotPassword`,
   async (email: string) => {
-    const data = await forgotPassword(email);
+    const data = await api.forgotPassword(email);
     return data;
   }
 );
@@ -76,7 +77,7 @@ export const forgotPasswords = createAsyncThunk(
 export const resetPasswords = createAsyncThunk(
   `${sliceName}/resetPassword`,
   async (data: { password: string; token: string }) => {
-    const response = await resetPassword(data);
+    const response = await api.resetPassword(data);
     return response;
   }
 );
@@ -84,7 +85,7 @@ export const resetPasswords = createAsyncThunk(
 export const updateUserInfo = createAsyncThunk(
   `${sliceName}/updateUserInfo`,
   async (data: { email: string; name: string; password: string }) => {
-    const response = await updateProfile(data);
+    const response = await api.updateProfile(data);
     return response;
   }
 );
