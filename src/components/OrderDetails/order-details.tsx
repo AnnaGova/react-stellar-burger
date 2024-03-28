@@ -1,7 +1,7 @@
 import done from '../../images/done.svg';
 import { RootState } from '../../services/store';
 import styles from './order-details.module.css'
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store';
 
 
 export function OrderDetails () {

@@ -1,5 +1,5 @@
 import styles from './forgot-password.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/store';
 import { Input,  Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';

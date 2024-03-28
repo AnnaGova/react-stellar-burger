@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsSection } from '../IngredientsSection/ingredients-section';
-import React from 'react';
-import { useSelector } from 'react-redux';
-// import { useDispatch } from 'react-redux';
-// import { fetchAllIngredients } from "../../services/slice/ingredientsSlice";
+import { useSelector } from '../../services/store';
 import { useInView } from 'react-intersection-observer';
 import { RootState } from '../../services/store';
 
@@ -20,9 +17,6 @@ export function BurgerIngredients() {
   const [saucesRef, saucesInView] = useInView();
   const [stuffingRef, mainInView] = useInView();
 
-  // useEffect(() => {
-  //   dispatch(fetchAllIngredients());
-  // }, [dispatch]);
 
   useEffect(() => {
     if (bunsInView) {

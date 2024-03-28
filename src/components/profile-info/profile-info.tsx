@@ -1,31 +1,20 @@
 import styles from './profile-info.module.css'
-import React from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useEffect, ChangeEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../services/store'
 import { checkUserAuth, updateUserInfo } from '../../services/slice/UserSlice'
-
 
 type UserData = {
   name: string;
   email: string;
 } | null;
 
-export function ProfileInfo() {
 
+export function ProfileInfo() {
   const [form, setFormValues] = useState({ name: "", email: "", password: "" });
   const [isFormChanged, setIsFormChanged] = useState(false);
   const dispatch = useDispatch();
   const userData = useSelector((state: {user: {data: UserData} }) => state.user.data);
-
-  useEffect(() => {
-    setFormValues({
-      ...form,
-      name: userData?.name || "",
-      email: userData?.email || "",
-    });
-  }, [userData, form]);
-
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
@@ -40,11 +29,14 @@ export function ProfileInfo() {
   };
 
   const handleCancel = () => {
-    setFormValues({
-      name: userData?.name || "",
-      email: userData?.email || "",
-      password: "",
-    });
+    // Сбрасываем значения формы на начальные значения
+    if (userData) {
+      setFormValues({
+        name: userData.name || "",
+        email: userData.email || "",
+        password: "",
+      });
+    }
   };
 
   return (
@@ -90,7 +82,6 @@ export function ProfileInfo() {
           </Button>
         </div>
       )}
-
     </form>
-  )
+  );
 }

@@ -4,9 +4,8 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
 import { modalActions,  selectActiveModal} from '../../services/slice/modalSlice';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/store";
 import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
-import PropTypes from 'prop-types';
 import { bunsInConstructor } from "../../services/slice/burgerConstructorSlice"
 import { IngredientsAdded } from "../../services/slice/burgerConstructorSlice";
 import { RootState } from "../../services/store";
@@ -15,7 +14,6 @@ interface IingredientsSection {
   sectionName: string;
   type: string;
 }
-
 
 
 export const  IngredientsSection:React.FC<IingredientsSection> = ({  sectionName, type}) => {
@@ -27,8 +25,6 @@ export const  IngredientsSection:React.FC<IingredientsSection> = ({  sectionName
   const filt = ingr.filter((ingredient)=> ingredient.type === type)
   const buns = useSelector(bunsInConstructor)
   const addedIngredients = useSelector(IngredientsAdded)
-
-
 
 
   return (
@@ -54,8 +50,3 @@ export const  IngredientsSection:React.FC<IingredientsSection> = ({  sectionName
     </>
   );
 }
-
-IngredientsSection.propTypes = {
-  sectionName: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-};

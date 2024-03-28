@@ -1,19 +1,28 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/store";
 import { useLocation, Navigate } from "react-router-dom";
 import { getIsAuthChecked } from "../../utils/selector";
 import { SpinnerCircular } from "spinners-react";
 import styles from "./protected-route.module.css";
-import PropTypes from "prop-types";
+import { RootState } from "../../services/store";
+import { ReactNode } from "react";
 
-function ProtectedRoute({ children, onlyUnAuth }) {
+interface ProtectedRouteProps {
+  children: ReactNode;
+  onlyUnAuth?: boolean;
+}
+
+function ProtectedRoute({
+  children,
+  onlyUnAuth,
+}: ProtectedRouteProps): JSX.Element {
   const location = useLocation();
-  const user = useSelector((state) => state.user.data);
+  const user = useSelector((state: RootState) => state.user.data);
   const isAuthChecked = useSelector(getIsAuthChecked);
 
   if (!isAuthChecked) {
     console.log("проверка аутентификации");
     return (
-      <div className={styles.loader}>
+      <div className={styles.spinner}>
         <SpinnerCircular color="red" />
       </div>
     );
@@ -32,12 +41,7 @@ function ProtectedRoute({ children, onlyUnAuth }) {
   }
 
   console.log("RENDER COMPONENT");
-  return children;
+  return <>{children}</>;
 }
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-  onlyUnAuth: PropTypes.bool,
-};
 
 export default ProtectedRoute;

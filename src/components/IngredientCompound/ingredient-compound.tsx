@@ -1,6 +1,6 @@
 import styles from "./ingredient-compound.module.css";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/store";
 import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
 
 export function IngredientCompound() {

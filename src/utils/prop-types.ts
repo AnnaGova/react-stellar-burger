@@ -33,6 +33,15 @@ export type OrderListType = {
   totalToday: number;
 };
 
+export type UserType = {
+  email: string;
+  name: string;
+};
+
+export type UserRegisterType = {
+  password: string;
+} & UserType;
+
 type ServerResponse<T> = {
   success: boolean;
 } & T;

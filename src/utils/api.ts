@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from "./cookie";
 import { GetOrderType } from "./prop-types";
+
 export class Api {
   private readonly baseUrl = "https://norma.nomoreparties.space/api";
 
@@ -24,7 +25,7 @@ export class Api {
     // Функция для обновления токена
     try {
       const refreshToken = getCookie("refreshToken"); // Получаем refreshToken из cookie
-      const res = await this.request("auth/token", {
+      const res = await this.request(`${this.baseUrl}auth/token`, {
         // Выполняем запрос к API для обновления токена
         method: "POST",
         headers: {

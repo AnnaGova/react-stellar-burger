@@ -10,7 +10,7 @@ import { IngredientPage } from "../../pages/ingredient/ingredient";
 import ProtectedRoute from "../protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile/profile";
 import { NotFoundPage } from "../../pages/notfound-page/notfound-page";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../services/store";
 //import { getRegisterUser, getLoginUser } from "../../utils/api";
 import { fetchAllIngredients} from "../../services/slice/ingredientsSlice";
 import { useLocation } from "react-router-dom";
@@ -23,7 +23,8 @@ import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
 import FeedPage from "../../pages/feed/feed";
 import { OrdersPage } from "../../pages/orders/orders";
 import { OrderInfo } from "../../pages/order-info/order-info";
-import api from "../../utils/api";
+//import api from "../../utils/api";
+import { loginUser, registerUser } from "../../services/slice/UserSlice";
 
 
 
@@ -39,11 +40,11 @@ function App() {
   };
 
   const clbLogin = (dataUser: { email: string; password: string }) => {
-    dispatch(api.getLoginUser(dataUser));
+    dispatch(loginUser(dataUser));
   };
 
   const clbRegister = (dataUser: {name: string; email: string;  password: string;}) => {
-    dispatch(api.getRegisterUser(dataUser));
+    dispatch(registerUser(dataUser));
   };
 
   useEffect(() => {
@@ -88,12 +89,7 @@ function App() {
 
           <Route
             path="forgot-password"
-            element={
-              <ProtectedRoute onlyUnAuth>
-                <ForgotPasswordPage />
-              </ProtectedRoute>
-            }
-          />
+            element={<ForgotPasswordPage />}/>
 
           <Route
             path="/reset-password"
@@ -105,9 +101,9 @@ function App() {
           />
 
           <Route
-            path="/profile"
+            path="profile"
             element={
-              <ProtectedRoute onlyUnAuth>
+              <ProtectedRoute >
                 <ProfilePage />
               </ProtectedRoute>
             }

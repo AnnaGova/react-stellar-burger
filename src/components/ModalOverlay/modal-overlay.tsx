@@ -1,5 +1,5 @@
 import styles from "./modal-overlay.module.css";
-import PropTypes from 'prop-types';
+
 
 interface IOverlay {
   onClick: () => void;
@@ -11,6 +11,3 @@ export function Overlay({ onClick }: IOverlay) {
   );
 }
 
-Overlay.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
