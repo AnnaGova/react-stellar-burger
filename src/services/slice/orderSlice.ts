@@ -1,9 +1,11 @@
 // orderSlice.js
 // orderSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createOrder,  } from '../../utils/api';
+//import { createOrder,  } from '../../utils/api';
 import { OrderType } from '../../utils/prop-types';
-// import { RootState } from '../store';
+import { RootState } from '../store';
+//import { getOrder } from '../../utils/api';
+import api from '../../utils/api';
 
 interface IOrderDetailsState {
   newOrder: { number: number | null; } | null;
@@ -23,19 +25,19 @@ const initialState: IOrderDetailsState = {
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrderResult',
   async (ingredients: any) => {
-      const data = await createOrder(ingredients);
+      const data = await api.createOrder(ingredients);
       return data;
   }
 );
 
-// export const getOrder = createAsyncThunk<
-//   OrderType,
-//   string,
-//   { state: RootState }
-// >(`${sliceName}/getOrder`, async (number) => {
-//   const data = await api.getOrderApi(number);
-//   return data.orders[0];
-// });
+export const getOrders = createAsyncThunk<
+  OrderType,
+  string,
+  { state: RootState }
+>('order/getOrder', async (number) => {
+  const data = await api.getOrder(number);
+  return data.orders[0];
+});
 
 
 export const orderSlice = createSlice({
