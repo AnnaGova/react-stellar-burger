@@ -1,8 +1,6 @@
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import styles from "./login.module.css"
-import { useDispatch, } from "react-redux";
-import { loginUser } from "../../services/slice/UserSlice";
 import { useState } from "react";
 
 interface LoginPageProps {

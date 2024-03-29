@@ -11,7 +11,7 @@ export function AppHeader() {
           <NavLink className={styles.link} to="/">
             <NavigationElement icon={<BurgerIcon type="primary" />} text="Конструктор" />
           </NavLink>
-          <NavLink className={styles.link} to="/orders">
+          <NavLink className={styles.link} to="/feed">
             <NavigationElement icon={<ListIcon type="primary" />} text="Лента заказов" />
           </NavLink>
         </div>

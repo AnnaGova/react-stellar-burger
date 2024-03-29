@@ -1,6 +1,6 @@
 import styles from './reset-password.module.css'
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../services/store';
 import { resetPasswords } from '../../services/slice/UserSlice';
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate, useLocation } from 'react-router-dom';

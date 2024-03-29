@@ -2,8 +2,6 @@ import styles from './register.module.css'
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { registerUser } from '../../services/slice/UserSlice';
 
 interface RegisterPageProps {
   onRegister: (data: { name: string; email: string; password: string }) => void;
@@ -29,8 +27,9 @@ export function RegisterPage({ onRegister }: RegisterPageProps) {
 
   return (
     <div className={styles.container}>
-      <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
       <form className={styles.form} onSubmit={handleSubmit}>
+      <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
+      {/* <form className={styles.form} onSubmit={handleSubmit}> */}
 
       <Input
           type="text"
@@ -69,7 +68,7 @@ export function RegisterPage({ onRegister }: RegisterPageProps) {
           htmlType="submit"
           extraClass={styles.button}
         >
-          Войти
+          Вотйи
         </Button>
         <p className="text text_type_main-default text_color_inactive">  Уже зарегистрированы?{" "}
           <Link to={"/login"} className={styles.link}>

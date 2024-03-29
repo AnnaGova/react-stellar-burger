@@ -54,5 +54,7 @@
 }
 
 .profile_info {
-  width: 480px;
+  width: 844px;
+  height: 300px;
+  overflow-y: scroll;
 }

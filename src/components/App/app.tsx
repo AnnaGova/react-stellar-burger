@@ -10,8 +10,7 @@ import { IngredientPage } from "../../pages/ingredient/ingredient";
 import ProtectedRoute from "../protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile/profile";
 import { NotFoundPage } from "../../pages/notfound-page/notfound-page";
-import { useDispatch } from "react-redux";
-import { getRegisterUser, getLoginUser } from "../../utils/api";
+import { useDispatch} from "../../services/store";
 import { fetchAllIngredients} from "../../services/slice/ingredientsSlice";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +19,11 @@ import { checkUserAuth } from "../../services/slice/UserSlice";
 import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
+import FeedPage from "../../pages/feed/feed";
+import { OrdersPage } from "../../pages/orders/orders";
+import { OrderInfo } from "../../pages/order-info/order-info";
+import { loginUser, registerUser } from "../../services/slice/UserSlice";
+import { ProfileInfo } from "../profile-info/profile-info";
 
 
 
@@ -35,11 +39,11 @@ function App() {
   };
 
   const clbLogin = (dataUser: { email: string; password: string }) => {
-    dispatch(getLoginUser(dataUser));
+    dispatch(loginUser(dataUser));
   };
 
   const clbRegister = (dataUser: {name: string; email: string;  password: string;}) => {
-    dispatch(getRegisterUser(dataUser));
+    dispatch(registerUser(dataUser));
   };
 
   useEffect(() => {
@@ -84,12 +88,7 @@ function App() {
 
           <Route
             path="forgot-password"
-            element={
-              <ProtectedRoute onlyUnAuth>
-                <ForgotPasswordPage />
-              </ProtectedRoute>
-            }
-          />
+            element={<ForgotPasswordPage />}/>
 
           <Route
             path="/reset-password"
@@ -101,17 +100,41 @@ function App() {
           />
 
           <Route
-            path="/profile"
+            path="profile"
             element={
-              <ProtectedRoute onlyUnAuth>
-                <ProfilePage />
+              <ProtectedRoute >
+                <ProfilePage>
+                  <ProfileInfo/>
+                </ProfilePage>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/orders"
+            element={
+              <ProtectedRoute>
+                <ProfilePage>
+                  <OrdersPage />
+                </ProfilePage>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile/orders/:number"
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
               </ProtectedRoute>
             }
           />
 
+
           <Route path="*" element={<NotFoundPage />} />
 
           <Route path="ingredients/:id" element={<IngredientPage />} />
+          <Route path="feed" element={<FeedPage />} />
+          <Route path="feed/:number" element={<OrderInfo />} />
+
         </Routes>
 
         {state && state.backgroundLocation && (
@@ -122,6 +145,24 @@ function App() {
                 <Modal title="Детали Ингредиента" onClose={closeModal}>
                   <IngredientCompound />
                 </Modal>
+              }
+            />
+            <Route
+              path="/feed/:number"
+              element={
+                <Modal title=" " onClose={closeModal}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+            <Route
+              path="/profile/orders/:number"
+              element={
+                <ProtectedRoute>
+                  <Modal title="" onClose={closeModal}>
+                    <OrderInfo />
+                  </Modal>
+                </ProtectedRoute>
               }
             />
           </Routes>

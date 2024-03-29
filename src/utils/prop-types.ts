@@ -10,7 +10,7 @@ export type IngredientType = {
   carbohydrates: number;
   calories: number;
 };
-export type wsConnect = {
+export type WsConnect = {
   wsUrl: string;
   withTokenRefresh: boolean;
 };
@@ -32,6 +32,15 @@ export type OrderListType = {
   total: number;
   totalToday: number;
 };
+
+export type UserType = {
+  email: string;
+  name: string;
+};
+
+export type UserRegisterType = {
+  password: string;
+} & UserType;
 
 type ServerResponse<T> = {
   success: boolean;

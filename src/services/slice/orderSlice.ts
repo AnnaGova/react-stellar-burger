@@ -1,9 +1,10 @@
 // orderSlice.js
 // orderSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createOrder,  } from '../../utils/api';
 import { OrderType } from '../../utils/prop-types';
-// import { RootState } from '../store';
+import { RootState } from '../store';
+import api from '../../utils/api';
+import { IngredientType } from '../../utils/prop-types';
 
 interface IOrderDetailsState {
   newOrder: { number: number | null; } | null;
@@ -11,6 +12,7 @@ interface IOrderDetailsState {
   loading: boolean; // Флаг загрузки
   error: string | null; // Ошибка (если есть)
 }
+
 
 
 const initialState: IOrderDetailsState = {
@@ -23,19 +25,19 @@ const initialState: IOrderDetailsState = {
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrderResult',
   async (ingredients: any) => {
-      const data = await createOrder(ingredients);
+      const data = await api.createOrder(ingredients);
       return data;
   }
 );
 
-// export const getOrder = createAsyncThunk<
-//   OrderType,
-//   string,
-//   { state: RootState }
-// >(`${sliceName}/getOrder`, async (number) => {
-//   const data = await api.getOrderApi(number);
-//   return data.orders[0];
-// });
+export const getOrders = createAsyncThunk<
+  OrderType,
+  string,
+  { state: RootState }
+>('order/getOrder', async (number) => {
+  const data = await api.getOrder(number);
+  return data.orders[0];
+});
 
 
 export const orderSlice = createSlice({
@@ -59,6 +61,18 @@ export const orderSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || null;
         state.newOrder = null; // Установка состояния order в null при возникновении ошибки
+      })
+      .addCase(getOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentOrder = action.payload;
+      })
+      .addCase(getOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
       });
   }
 });
