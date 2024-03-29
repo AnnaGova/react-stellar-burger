@@ -12,20 +12,19 @@ import { fetchOrder } from '../../services/slice/orderSlice';
 import { selectAllIngredients } from '../../services/slice/ingredientsSlice';
 import { bunsInConstructor } from '../../services/slice/burgerConstructorSlice';
 import { IngredientType } from '../../utils/prop-types';
-import { RootState } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
 
 
 
 export function BurgersContructor() {
 
-  const ingredientsInConstructor = useSelector((state: RootState) => state.burgerConstructor.burgerIngredients);//игредиенты, которые нахоятся в конструкторе
+  const ingredientsInConstructor = useSelector((state) => state.burgerConstructor.burgerIngredients);//игредиенты, которые нахоятся в конструкторе
   const dispatch = useDispatch();
   const bun = useSelector(bunsInConstructor);//булки, которые находятся в конструкторе
-  const modalState = useSelector((state: RootState) => state.modal);
+  const modalState = useSelector((state) => state.modal);
   const activeModal = useSelector(selectActiveModal);
   const ingredients = useSelector(selectAllIngredients);// все ингредиенты
-  const user = useSelector((state: RootState) => state.user.data)
+  const user = useSelector((state) => state.user.data)
   const navigate = useNavigate();
 
 

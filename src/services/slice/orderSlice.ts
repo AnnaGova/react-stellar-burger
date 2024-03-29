@@ -1,11 +1,10 @@
 // orderSlice.js
 // orderSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-//import { createOrder,  } from '../../utils/api';
 import { OrderType } from '../../utils/prop-types';
 import { RootState } from '../store';
-//import { getOrder } from '../../utils/api';
 import api from '../../utils/api';
+import { IngredientType } from '../../utils/prop-types';
 
 interface IOrderDetailsState {
   newOrder: { number: number | null; } | null;
@@ -13,6 +12,7 @@ interface IOrderDetailsState {
   loading: boolean; // Флаг загрузки
   error: string | null; // Ошибка (если есть)
 }
+
 
 
 const initialState: IOrderDetailsState = {
@@ -61,6 +61,18 @@ export const orderSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || null;
         state.newOrder = null; // Установка состояния order в null при возникновении ошибки
+      })
+      .addCase(getOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentOrder = action.payload;
+      })
+      .addCase(getOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
       });
   }
 });

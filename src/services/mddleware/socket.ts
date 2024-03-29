@@ -1,10 +1,10 @@
 import { ActionCreatorWithOptionalPayload, ActionCreatorWithPayload, ActionCreatorWithoutPayload, Middleware } from "@reduxjs/toolkit";
 import { setCookie } from "../../utils/cookie";
-import { OrderListType, RefreshResponseWithTokenType, wsConnect } from "../../utils/prop-types";
+import { OrderListType, RefreshResponseWithTokenType, WsConnect } from "../../utils/prop-types";
 import api from "../../utils/api";
 
 type TWsActions = {
-  wsConnect: ActionCreatorWithPayload<wsConnect>;
+  wsConnect: ActionCreatorWithPayload<WsConnect>;
   wsDisconnect: ActionCreatorWithoutPayload;
   wsConnecting: ActionCreatorWithoutPayload;
   wsOpen: ActionCreatorWithoutPayload;

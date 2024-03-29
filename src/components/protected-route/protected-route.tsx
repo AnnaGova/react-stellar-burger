@@ -3,7 +3,6 @@ import { useLocation, Navigate } from "react-router-dom";
 import { getIsAuthChecked } from "../../utils/selector";
 import { SpinnerCircular } from "spinners-react";
 import styles from "./protected-route.module.css";
-import { RootState } from "../../services/store";
 import { ReactNode } from "react";
 
 interface ProtectedRouteProps {
@@ -16,7 +15,7 @@ function ProtectedRoute({
   onlyUnAuth,
 }: ProtectedRouteProps): JSX.Element {
   const location = useLocation();
-  const user = useSelector((state: RootState) => state.user.data);
+  const user = useSelector((state) => state.user.data);
   const isAuthChecked = useSelector(getIsAuthChecked);
 
   if (!isAuthChecked) {

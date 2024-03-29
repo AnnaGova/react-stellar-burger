@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "../../services/store";
 import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
 import { bunsInConstructor } from "../../services/slice/burgerConstructorSlice"
 import { IngredientsAdded } from "../../services/slice/burgerConstructorSlice";
-import { RootState } from "../../services/store";
+
 
 interface IingredientsSection {
   sectionName: string;
@@ -19,7 +19,7 @@ interface IingredientsSection {
 export const  IngredientsSection:React.FC<IingredientsSection> = ({  sectionName, type}) => {
 
   const dispatch = useDispatch();
-  const modalState = useSelector((state: RootState) => state.modal);
+  const modalState = useSelector((state) => state.modal);
   const activeModal = useSelector(selectActiveModal);
   const ingr = useSelector(selectAllIngredients);
   const filt = ingr.filter((ingredient)=> ingredient.type === type)

@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
-import { OrderListType, wsConnect } from "../../utils/prop-types";
+import { OrderListType, WsConnect } from "../../utils/prop-types";
 
-export const wsConnectFeed = createAction<wsConnect>("WS_CONNECT_FEED");
+export const wsConnectFeed = createAction<WsConnect>("WS_CONNECT_FEED");
 export const wsDisconnectFeed = createAction("WS_DISCONNECT_FEED");
 export const wsConnectingFeed = createAction("WS_CONNECTING_FEED");
 export const wsOpenFeed = createAction("WS_OPEN_FEED");

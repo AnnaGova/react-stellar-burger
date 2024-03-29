@@ -10,7 +10,7 @@ export type IngredientType = {
   carbohydrates: number;
   calories: number;
 };
-export type wsConnect = {
+export type WsConnect = {
   wsUrl: string;
   withTokenRefresh: boolean;
 };

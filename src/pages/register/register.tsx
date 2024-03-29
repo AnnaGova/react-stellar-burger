@@ -2,8 +2,6 @@ import styles from './register.module.css'
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { registerUser } from '../../services/slice/UserSlice';
 
 interface RegisterPageProps {
   onRegister: (data: { name: string; email: string; password: string }) => void;

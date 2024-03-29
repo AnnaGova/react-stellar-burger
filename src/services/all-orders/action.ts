@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
-import { OrderListType, wsConnect } from "../../utils/prop-types";
+import { OrderListType, WsConnect } from "../../utils/prop-types";
 
-export const wsConnectOrder = createAction<wsConnect>("WS_CONNECT_ORDER");
+export const wsConnectOrder = createAction<WsConnect>("WS_CONNECT_ORDER");
 export const wsDisconnectOrder = createAction("WS_DISCONNECT_ORDER");
 export const wsConnectingOrder = createAction("WS_CONNECTING_ORDER");
 export const wsOpenOrder = createAction("WS_OPEN_ORDER");

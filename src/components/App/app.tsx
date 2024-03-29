@@ -10,8 +10,7 @@ import { IngredientPage } from "../../pages/ingredient/ingredient";
 import ProtectedRoute from "../protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile/profile";
 import { NotFoundPage } from "../../pages/notfound-page/notfound-page";
-import { useDispatch, useSelector } from "../../services/store";
-//import { getRegisterUser, getLoginUser } from "../../utils/api";
+import { useDispatch} from "../../services/store";
 import { fetchAllIngredients} from "../../services/slice/ingredientsSlice";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +22,8 @@ import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
 import FeedPage from "../../pages/feed/feed";
 import { OrdersPage } from "../../pages/orders/orders";
 import { OrderInfo } from "../../pages/order-info/order-info";
-//import api from "../../utils/api";
 import { loginUser, registerUser } from "../../services/slice/UserSlice";
+import { ProfileInfo } from "../profile-info/profile-info";
 
 
 
@@ -104,7 +103,9 @@ function App() {
             path="profile"
             element={
               <ProtectedRoute >
-                <ProfilePage />
+                <ProfilePage>
+                  <ProfileInfo/>
+                </ProfilePage>
               </ProtectedRoute>
             }
           />
@@ -112,7 +113,9 @@ function App() {
             path="/profile/orders"
             element={
               <ProtectedRoute>
-                <OrdersPage />
+                <ProfilePage>
+                  <OrdersPage />
+                </ProfilePage>
               </ProtectedRoute>
             }
           />
@@ -147,7 +150,7 @@ function App() {
             <Route
               path="/feed/:number"
               element={
-                <Modal title="" onClose={closeModal}>
+                <Modal title=" " onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
               }

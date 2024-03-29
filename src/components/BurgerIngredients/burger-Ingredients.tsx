@@ -4,7 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientsSection } from '../IngredientsSection/ingredients-section';
 import { useSelector } from '../../services/store';
 import { useInView } from 'react-intersection-observer';
-import { RootState } from '../../services/store';
+
 
 
 
@@ -12,7 +12,7 @@ import { RootState } from '../../services/store';
 export function BurgerIngredients() {
   const [current, setCurrent] = useState('one')
   // const dispatch = useDispatch();
-  const {loading, error} = useSelector((state: RootState) => state.ingredients)
+  const {loading, error} = useSelector((state) => state.ingredients)
   const [bunsRef, bunsInView] = useInView();
   const [saucesRef, saucesInView] = useInView();
   const [stuffingRef, mainInView] = useInView();

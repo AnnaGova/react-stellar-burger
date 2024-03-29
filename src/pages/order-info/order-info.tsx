@@ -1,14 +1,14 @@
 import { useParams } from "react-router";
 import styles from "./order-info.module.css";
 import { useDispatch, useSelector } from "../../services/store";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { IngredientImage } from "../../components/IngredientImage/ingredient-image";
 import { CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import { SpinnerCircular } from "spinners-react";
 import { getOrders } from "../../services/slice/orderSlice";
 import { OrderType, IngredientType } from "../../utils/prop-types";
 
-export function OrderInfo() {
+export const  OrderInfo: React.FC=({children}) =>{
   const dispatch = useDispatch();
   const { currentOrder, loading } = useSelector((state) => state.order);
   const { number } = useParams();
@@ -36,6 +36,8 @@ export function OrderInfo() {
       dispatch(getOrders(number));
     }
   }, [dispatch, number]);
+
+  console.log('hhgg', number, currentOrder)
 
   return (
     <>
@@ -103,6 +105,7 @@ export function OrderInfo() {
                 </p>
                 <CurrencyIcon type="primary" />
               </div>
+              {children}
             </div>
           </div>
         )
