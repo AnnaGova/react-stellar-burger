@@ -1,14 +1,14 @@
 //import {getUser, getLoginUser, getRegisterUser, updateProfile, logoutUser, forgotPassword, resetPassword, } from "../../utils/api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {getActionName, isActionPending, isActionRejected,} from "../../utils/redux-functuons";
-import { deleteCookie, setCookie } from "../../utils/cookie";
+import {getActionName, isActionPending, isActionRejected,} from "../../../utils/redux-functuons";
+import { deleteCookie, setCookie } from "../../../utils/cookie";
 import { PayloadAction } from "@reduxjs/toolkit";
-import api from "../../utils/api";
+import api from "../../../utils/api";
 
 type State = { [key: string]: boolean | null;};
 
-const initialState = {
-  IsAuthChecked: false,
+export const initialState = {
+  IsAuthChecked: false, // факт проверки аутентификации пользователя (прошла ли уже эта проверка или нет)
   data: null,
 
   registerUserError: null,
@@ -19,7 +19,7 @@ const initialState = {
 
   getUserError: null,
   getUserRequest: false,
-};
+}
 
 export const sliceName = "user";
 

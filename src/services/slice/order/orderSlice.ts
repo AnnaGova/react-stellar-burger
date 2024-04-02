@@ -1,10 +1,10 @@
 // orderSlice.js
 // orderSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { OrderType } from '../../utils/prop-types';
-import { RootState } from '../store';
-import api from '../../utils/api';
-import { IngredientType } from '../../utils/prop-types';
+import { OrderType } from '../../../utils/prop-types';
+import { RootState } from '../../store';
+import api from '../../../utils/api';
+import { IngredientType } from '../../../utils/prop-types';
 
 interface IOrderDetailsState {
   newOrder: { number: number | null; } | null;
@@ -15,7 +15,7 @@ interface IOrderDetailsState {
 
 
 
-const initialState: IOrderDetailsState = {
+export const initialState: IOrderDetailsState = {
   newOrder: null,
   loading: true,
   error: null,

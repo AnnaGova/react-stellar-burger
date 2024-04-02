@@ -11,18 +11,18 @@ import ProtectedRoute from "../protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile/profile";
 import { NotFoundPage } from "../../pages/notfound-page/notfound-page";
 import { useDispatch} from "../../services/store";
-import { fetchAllIngredients} from "../../services/slice/ingredientsSlice";
+import { fetchAllIngredients} from "../../services/slice/ingredients/ingredientsSlice";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { checkUserAuth } from "../../services/slice/UserSlice";
+import { checkUserAuth } from "../../services/slice/user/UserSlice";
 import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
 import FeedPage from "../../pages/feed/feed";
 import { OrdersPage } from "../../pages/orders/orders";
 import { OrderInfo } from "../../pages/order-info/order-info";
-import { loginUser, registerUser } from "../../services/slice/UserSlice";
+import { loginUser, registerUser } from "../../services/slice/user/UserSlice";
 import { ProfileInfo } from "../profile-info/profile-info";
 
 

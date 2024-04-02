@@ -2,7 +2,7 @@ import styles from './profile-info.module.css'
 import React, { useState, ChangeEvent, useEffect } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from '../../services/store'
-import { checkUserAuth, updateUserInfo } from '../../services/slice/UserSlice'
+import { checkUserAuth, updateUserInfo } from '../../services/slice/user/UserSlice'
 
 type UserData = {
   name: string;

@@ -1,6 +1,6 @@
 
 import { createSlice} from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
 interface IModalState {
   title: string;
@@ -9,7 +9,7 @@ interface IModalState {
   activeModal: string | null;
 }
 
-const initialState: IModalState = {
+export const initialState: IModalState = {
   title: '',
   isOpen: false,
   content: null,

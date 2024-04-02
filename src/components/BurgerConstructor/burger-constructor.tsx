@@ -3,14 +3,14 @@ import { Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-dev
 import { Modal } from '../Modal/modal';
 import { useMemo } from 'react';
 import { OrderDetails } from '../OrderDetails/order-details';
-import { burgerConstructorActions } from '../../services/slice/burgerConstructorSlice';
+import { burgerConstructorActions } from '../../services/slice/constructor/burgerConstructorSlice';
 import { useSelector, useDispatch } from '../../services/store';
-import { modalActions, selectActiveModal } from '../../services/slice/modalSlice';
+import { modalActions, selectActiveModal } from '../../services/slice/modal/modalSlice';
 import BurgerConstructorItem from '../BurgerConstructorItem/burger-constructor-item';
 import { useDrop } from 'react-dnd';
-import { fetchOrder } from '../../services/slice/orderSlice';
-import { selectAllIngredients } from '../../services/slice/ingredientsSlice';
-import { bunsInConstructor } from '../../services/slice/burgerConstructorSlice';
+import { fetchOrder } from '../../services/slice/order/orderSlice';
+import { selectAllIngredients } from '../../services/slice/ingredients/ingredientsSlice';
+import { bunsInConstructor } from '../../services/slice/constructor/burgerConstructorSlice';
 import { IngredientType } from '../../utils/prop-types';
 import { useNavigate } from 'react-router-dom';
 

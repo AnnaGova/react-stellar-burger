@@ -2,7 +2,7 @@ import { NavLink} from "react-router-dom";
 import styles from "./profile.module.css";
 import { ProfileInfo } from "../../components/profile-info/profile-info";
 import { useDispatch } from "../../services/store";
-import { logoutUsers } from "../../services/slice/UserSlice";
+import { logoutUsers } from "../../services/slice/user/UserSlice";
 
 export const ProfilePage: React.FC = ({children}) =>{
   const dispatch = useDispatch();

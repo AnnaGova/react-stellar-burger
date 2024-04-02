@@ -3,7 +3,7 @@ import { useDispatch } from '../../services/store';
 import { Input,  Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { forgotPasswords } from '../../services/slice/UserSlice';
+import { forgotPasswords } from '../../services/slice/user/UserSlice';
 
 export function ForgotPasswordPage() {
 

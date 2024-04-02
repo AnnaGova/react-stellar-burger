@@ -3,11 +3,11 @@ import styles from './ingredients-section.module.css';
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
-import { modalActions,  selectActiveModal} from '../../services/slice/modalSlice';
+import { modalActions,  selectActiveModal} from '../../services/slice/modal/modalSlice';
 import { useDispatch, useSelector } from "../../services/store";
-import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
-import { bunsInConstructor } from "../../services/slice/burgerConstructorSlice"
-import { IngredientsAdded } from "../../services/slice/burgerConstructorSlice";
+import { selectAllIngredients } from "../../services/slice/ingredients/ingredientsSlice";
+import { bunsInConstructor } from "../../services/slice/constructor/burgerConstructorSlice"
+import { IngredientsAdded } from "../../services/slice/constructor/burgerConstructorSlice";
 
 
 interface IingredientsSection {
