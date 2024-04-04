@@ -3,14 +3,14 @@ import { Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-dev
 import { Modal } from '../Modal/modal';
 import { useMemo } from 'react';
 import { OrderDetails } from '../OrderDetails/order-details';
-import { burgerConstructorActions } from '../../services/slice/burgerConstructorSlice';
+import { burgerConstructorActions } from '../../services/slice/constructor/burgerConstructorSlice';
 import { useSelector, useDispatch } from '../../services/store';
-import { modalActions, selectActiveModal } from '../../services/slice/modalSlice';
+import { modalActions, selectActiveModal } from '../../services/slice/modal/modalSlice';
 import BurgerConstructorItem from '../BurgerConstructorItem/burger-constructor-item';
 import { useDrop } from 'react-dnd';
-import { fetchOrder } from '../../services/slice/orderSlice';
-import { selectAllIngredients } from '../../services/slice/ingredientsSlice';
-import { bunsInConstructor } from '../../services/slice/burgerConstructorSlice';
+import { fetchOrder } from '../../services/slice/order/orderSlice';
+import { selectAllIngredients } from '../../services/slice/ingredients/ingredientsSlice';
+import { bunsInConstructor } from '../../services/slice/constructor/burgerConstructorSlice';
 import { IngredientType } from '../../utils/prop-types';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,13 +72,14 @@ export function BurgersContructor() {
 
   return (
     <section className={`${styles.container} mt-25`} >
-      <div className={styles.order_container} ref={dropTarget} style={{ border: isHover ? '1px solid #4c4cff' : 'transparent' }}>
+      <div className={styles.order_container} ref={dropTarget} data-cy="constructor" style={{ border: isHover ? '1px solid #4c4cff' : 'transparent' }}>
 
         <span className={styles.title}>
           {!isHover && !bun && ingredientsInConstructor.length === 0 && 'Перетащите сюда ингредиенты для бургера'}
           {isHover && 'Отпустите ингредиент над выделенной'}
         </span>
 
+        <div data-cy="bun-top">
         {bun && (
           <ConstructorElement
             type="top"
@@ -88,9 +89,10 @@ export function BurgersContructor() {
             thumbnail={bun.image}
             extraClass="ml-8"
           />
-        )}
+          )}
+        </div>
 
-        <ul className={styles.added_items}>
+        <ul className={styles.added_items} data-cy="constructor-ingredients">
           {ingredientsInConstructor.map((ingredient, index) => (
 
             <BurgerConstructorItem
@@ -102,6 +104,7 @@ export function BurgersContructor() {
 
           ))}
         </ul>
+        <div data-cy="bun-bottom">
         {bun && (
           <ConstructorElement
             type="bottom"
@@ -112,12 +115,13 @@ export function BurgersContructor() {
             extraClass="ml-8"
           />
         )}
+        </div>
         <div className={`${styles.order} mt-10 mr-8`}>
           <div className={`${styles.sum}`}>
             <p className="text text_type_digits-medium mr-2">${finalPrice}</p>
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large" onClick={() => { if (!user) {
+          <Button data-cy="order-button" htmlType="button" type="primary" size="large" onClick={() => { if (!user) {
             navigate('/login')
           }
             dispatch(modalActions.openModal({ isOpen: true, content: 'Данные заказа', active: 'order' }));

@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { userSlice } from "../services/slice/UserSlice";
+import { userSlice } from "../services/slice/user/UserSlice";
 import { RootState } from "../services/store";
 
 // Селектор для проверки состояния аутентификации

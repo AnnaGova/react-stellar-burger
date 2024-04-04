@@ -48,7 +48,7 @@ export function BurgerIngredients() {
       {loading || error ? (
         <p className={styles.loading}>{loading ? 'Идет загрузка ингредиентов' : `Произошла ошибка: ${error}`}</p>
       ) : (
-        <div className={styles.scroll_wraper}>
+        <div className={styles.scroll_wraper} data-cy="ingredients">
           <div ref={bunsRef}>
             <IngredientsSection sectionName="Булки" type="bun"/>
           </div>

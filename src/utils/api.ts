@@ -2,7 +2,7 @@ import { getCookie, setCookie } from "./cookie";
 import { GetOrderType } from "./prop-types";
 
 export class Api {
-  private readonly baseUrl = "https://norma.nomoreparties.space/api";
+  public readonly baseUrl = "https://norma.nomoreparties.space/api";
 
   private checkResponse<T>(res: Response): Promise<T> {
     if (res.ok) {
