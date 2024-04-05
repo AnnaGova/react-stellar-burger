@@ -20,7 +20,9 @@ export function AppHeader() {
         </NavLink>
       </nav>
       <div className={styles.logo}>
-        <Logo />
+        <NavLink className={styles.link} to="/">
+            <Logo />
+        </NavLink>
       </div>
 
     </header>

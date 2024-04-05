@@ -37,10 +37,10 @@ export function Modal ({ onClose, children, title }: PropsWithChildren<ModalProp
 
     <>
         <div >
-          <div className={styles.container}>
+          <div data-cy="modal" className={styles.container}>
             <div className={`${styles.header} pt-10 pr-10 ml-10`}>
             <p className="text text_type_main-large">{title}</p>
-            <button className={styles.close_button} onClick={() => onClose()}>
+            <button data-cy="close-modal" className={styles.close_button} onClick={() => onClose()}>
               <CloseIcon type="primary" />
             </button>
             </div>

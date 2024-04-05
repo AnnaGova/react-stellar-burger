@@ -11,18 +11,18 @@ import ProtectedRoute from "../protected-route/protected-route";
 import { ProfilePage } from "../../pages/profile/profile";
 import { NotFoundPage } from "../../pages/notfound-page/notfound-page";
 import { useDispatch} from "../../services/store";
-import { fetchAllIngredients} from "../../services/slice/ingredientsSlice";
+import { fetchAllIngredients} from "../../services/slice/ingredients/ingredientsSlice";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { checkUserAuth } from "../../services/slice/UserSlice";
+import { checkUserAuth } from "../../services/slice/user/UserSlice";
 import { ResetPasswordPage } from "../../pages/reset-password/reset-password";
 import { Modal } from "../Modal/modal";
 import { IngredientCompound } from "../IngredientCompound/ingredient-compound";
 import FeedPage from "../../pages/feed/feed";
 import { OrdersPage } from "../../pages/orders/orders";
 import { OrderInfo } from "../../pages/order-info/order-info";
-import { loginUser, registerUser } from "../../services/slice/UserSlice";
+import { loginUser, registerUser } from "../../services/slice/user/UserSlice";
 import { ProfileInfo } from "../profile-info/profile-info";
 
 
@@ -32,7 +32,7 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   let navigate = useNavigate();
-  let state = location.state;
+  let state = location.state as { backgroundLocation?: Location };
 
   const closeModal = () => {
     navigate(-1);
@@ -59,13 +59,7 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.container}>
-      <Routes
-          location={
-            state && state.backgroundLocation
-              ? state.backgroundLocation
-              : location
-          }
-        >
+      <Routes location={state?.backgroundLocation || location}>
           <Route path="/" element={<HomePage />} />
 
           <Route
@@ -102,29 +96,32 @@ function App() {
           <Route
             path="profile"
             element={
-              <ProtectedRoute >
-                <ProfilePage>
+             <ProtectedRoute>
+              <ProfilePage>
                   <ProfileInfo/>
                 </ProfilePage>
-              </ProtectedRoute>
+             </ProtectedRoute>
+
             }
           />
           <Route
             path="/profile/orders"
             element={
-              <ProtectedRoute>
+
                 <ProfilePage>
                   <OrdersPage />
                 </ProfilePage>
-              </ProtectedRoute>
+
             }
           />
           <Route
             path="profile/orders/:number"
             element={
-              <ProtectedRoute>
-                <OrderInfo />
-              </ProtectedRoute>
+
+                <ProfilePage >
+                  <OrderInfo />
+                </ProfilePage>
+
             }
           />
 
@@ -135,9 +132,10 @@ function App() {
           <Route path="feed" element={<FeedPage />} />
           <Route path="feed/:number" element={<OrderInfo />} />
 
+
         </Routes>
 
-        {state && state.backgroundLocation && (
+        { state?.backgroundLocation &&(
           <Routes>
             <Route
               path="/ingredients/:id"
@@ -158,11 +156,11 @@ function App() {
             <Route
               path="/profile/orders/:number"
               element={
-                <ProtectedRoute>
-                  <Modal title="" onClose={closeModal}>
+
+                  <Modal title="" onClose={closeModal} >
                     <OrderInfo />
                   </Modal>
-                </ProtectedRoute>
+
               }
             />
           </Routes>

@@ -1,7 +1,7 @@
 import styles from "./ingredient-compound.module.css";
 import { useParams } from "react-router";
 import { useSelector } from "../../services/store";
-import { selectAllIngredients } from "../../services/slice/ingredientsSlice";
+import { selectAllIngredients } from "../../services/slice/ingredients/ingredientsSlice";
 
 export function IngredientCompound() {
   const { id } = useParams();
