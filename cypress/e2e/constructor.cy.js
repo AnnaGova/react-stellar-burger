@@ -22,7 +22,7 @@ describe("drag and drop to constructor works correctly", () => {
   beforeEach(() => {
     cy.intercept("GET", `${BASE_URL}/ingredients`, { fixture: "ingredients.json" });
     cy.viewport(1920, 1080);
-    cy.visit('http://localhost:3000/');
+    cy.visit('/');
   });
   it("should drag bun to constructor", () => {
     cy.dragIngredientToConstructor(BUN);
@@ -43,7 +43,7 @@ describe("order works correctly", () => {
     cy.setCookie("accessToken", "mockAccessToken");
     cy.setCookie("refreshToken", "mockRefreshToken");
     cy.viewport(1920, 1080);
-    cy.visit('http://localhost:3000/');
+    cy.visit('/')
   });
   afterEach(() => {
     cy.clearCookies();

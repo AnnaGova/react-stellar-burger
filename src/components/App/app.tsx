@@ -60,7 +60,7 @@ function App() {
       <AppHeader />
       <main className={styles.container}>
       <Routes location={state?.backgroundLocation || location}>
-          <Route path="/react-stellar-burger/" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
 
           <Route
             path="/login"
@@ -96,28 +96,30 @@ function App() {
           <Route
             path="profile"
             element={
-              <ProtectedRoute >
+
                 <ProfilePage>
                   <ProfileInfo/>
                 </ProfilePage>
-              </ProtectedRoute>
+
             }
           />
           <Route
             path="/profile/orders"
             element={
-              <ProtectedRoute>
+
                 <ProfilePage>
                   <OrdersPage />
                 </ProfilePage>
-              </ProtectedRoute>
+
             }
           />
           <Route
             path="profile/orders/:number"
             element={
               <ProtectedRoute>
-                <OrderInfo />
+                <ProfilePage >
+                  <OrderInfo />
+                </ProfilePage>
               </ProtectedRoute>
             }
           />
@@ -129,9 +131,10 @@ function App() {
           <Route path="feed" element={<FeedPage />} />
           <Route path="feed/:number" element={<OrderInfo />} />
 
+
         </Routes>
 
-        {state && state.backgroundLocation && (
+        { state?.backgroundLocation &&(
           <Routes>
             <Route
               path="/ingredients/:id"
@@ -152,11 +155,11 @@ function App() {
             <Route
               path="/profile/orders/:number"
               element={
-                <ProtectedRoute>
-                  <Modal title="" onClose={closeModal}>
+
+                  <Modal title="" onClose={closeModal} >
                     <OrderInfo />
                   </Modal>
-                </ProtectedRoute>
+
               }
             />
           </Routes>

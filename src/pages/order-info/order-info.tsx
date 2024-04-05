@@ -7,6 +7,9 @@ import { CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger
 import { SpinnerCircular } from "spinners-react";
 import { getOrders } from "../../services/slice/order/orderSlice";
 import { OrderType, IngredientType } from "../../utils/prop-types";
+import { useLocation } from "react-router-dom";
+
+
 
 export const  OrderInfo: React.FC=({children}) =>{
   const dispatch = useDispatch();
@@ -14,6 +17,7 @@ export const  OrderInfo: React.FC=({children}) =>{
   const { number } = useParams();
   const allIngredients = useSelector((state) => state.ingredients.allIngredients);
   console.log(allIngredients);
+  const location = useLocation()
 
 
   const SumOrder = (
@@ -29,6 +33,8 @@ export const  OrderInfo: React.FC=({children}) =>{
     });
     return totalPrice;
   };
+
+  console.log("location", location)
 
 
   useEffect(() => {
