@@ -60,7 +60,7 @@ function App() {
       <AppHeader />
       <main className={styles.container}>
       <Routes location={state?.backgroundLocation || location}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/react-stellar-burger/" element={<HomePage />} />
 
           <Route
             path="/login"
