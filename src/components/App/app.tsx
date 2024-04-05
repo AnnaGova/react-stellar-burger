@@ -60,7 +60,7 @@ function App() {
       <AppHeader />
       <main className={styles.container}>
       <Routes location={state?.backgroundLocation || location}>
-          <Route path="/react-stellar-burger" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
 
           <Route
             path="/login"
@@ -96,10 +96,11 @@ function App() {
           <Route
             path="profile"
             element={
-
-                <ProfilePage>
+             <ProtectedRoute>
+              <ProfilePage>
                   <ProfileInfo/>
                 </ProfilePage>
+             </ProtectedRoute>
 
             }
           />
@@ -116,11 +117,11 @@ function App() {
           <Route
             path="profile/orders/:number"
             element={
-              <ProtectedRoute>
+
                 <ProfilePage >
                   <OrderInfo />
                 </ProfilePage>
-              </ProtectedRoute>
+
             }
           />
 

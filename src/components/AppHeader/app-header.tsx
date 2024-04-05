@@ -8,7 +8,7 @@ export function AppHeader() {
     <header className={styles.header}>
       <nav className={styles.navigation}>
         <div className={styles.container}>
-          <NavLink className={styles.link} to="/react-stellar-burger">
+          <NavLink className={styles.link} to="/">
             <NavigationElement icon={<BurgerIcon type="primary" />} text="Конструктор" />
           </NavLink>
           <NavLink className={styles.link} to="/feed">
@@ -20,7 +20,7 @@ export function AppHeader() {
         </NavLink>
       </nav>
       <div className={styles.logo}>
-        <NavLink className={styles.link} to="/react-stellar-burger">
+        <NavLink className={styles.link} to="/">
             <Logo />
         </NavLink>
       </div>
